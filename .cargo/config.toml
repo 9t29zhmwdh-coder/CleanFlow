@@ -1,0 +1,11 @@
+[build]
+# Incremental compilation for faster rebuilds
+incremental = true
+
+[profile.dev]
+opt-level = 1        # light optimisations even in dev for file I/O perf
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1

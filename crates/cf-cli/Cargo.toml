@@ -1,0 +1,16 @@
+[package]
+name    = "cf-cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "cleanflow"
+path = "src/main.rs"
+
+[dependencies]
+cf-core    = { workspace = true }
+tokio      = { workspace = true }
+serde_json = { workspace = true }
+anyhow     = { workspace = true }
+clap       = { version = "4", features = ["derive", "color"] }
+keyring    = "3"
