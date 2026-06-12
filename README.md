@@ -22,7 +22,7 @@ CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies 
 | Feature | Description |
 |---|---|
 | **File Analysis** | MIME detection, SHA-256 deduplication, series grouping |
-| **AI Classification** | Claude Haiku classifies invoices, contracts, screenshots, code, etc. |
+| **AI Classification** | Local AI classifies invoices, contracts, screenshots, code, etc. |
 | **Clean-Up Engine** | Detects DMGs, .DS_Store, temp files, zombie files, old versions |
 | **Rule Engine** | Built-in + custom rules (e.g. "PDF + invoice → Documents/Finance/2026") |
 | **Action Preview** | Review every proposed action before executing |
@@ -74,11 +74,10 @@ cleanflow rules list
 
 | Provider | Setup |
 |---|---|
-| **Claude (Anthropic)** | Enter API key in Settings → saved securely in Keychain |
+| **Ollama (local)** | Set URL in Settings (default: `http://localhost:11434`) |
 | **Ollama (local)** | Install [Ollama](https://ollama.ai), run `ollama pull llama3.2` |
 | **Rule-based only** | No AI required — uses built-in rules only |
 
-Cost estimate: ~$0.002 per 1,000 files with `claude-haiku-4-5`.
 
 ---
 
