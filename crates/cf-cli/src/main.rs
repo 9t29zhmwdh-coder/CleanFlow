@@ -122,7 +122,7 @@ async fn cmd_organize(
     let rules = store.list_rules().unwrap_or_else(|_| builtin_rules());
     let engine = RuleEngine::new(rules);
     let planner = Planner::new(&engine);
-    let plan = planner.build_plan(path.clone(), &mut files);
+    let plan = planner.build_plan(path.to_path_buf(), &mut files);
 
     println!("\nPlan: {} actions", plan.actions.len());
     println!("  Files affected: {}", plan.stats.files_affected);
