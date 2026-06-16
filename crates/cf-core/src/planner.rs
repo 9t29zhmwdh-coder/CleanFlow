@@ -94,7 +94,7 @@ impl<'a> Planner<'a> {
         }
 
         // Deduplicate: keep highest-priority action per file
-        all_actions.sort_by(|a, b| b.priority.cmp(&a.priority));
+        all_actions.sort_by_key(|b| std::cmp::Reverse(b.priority));
         all_actions.dedup_by_key(|a| action_file_id(&a.action));
 
         stats.files_affected = all_actions
@@ -166,7 +166,7 @@ fn dirs_home() -> PathBuf {
 fn duplicate_group_actions(group: &DuplicateGroup) -> Vec<PlannedAction> {
     // Keep newest, trash the rest
     let mut sorted = group.files.clone();
-    sorted.sort_by(|a, b| b.modified_at.cmp(&a.modified_at));
+    sorted.sort_by_key(|b| std::cmp::Reverse(b.modified_at));
 
     sorted
         .iter()
