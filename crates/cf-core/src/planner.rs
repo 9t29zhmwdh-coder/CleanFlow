@@ -4,7 +4,7 @@ use chrono::Utc;
 use uuid::Uuid;
 
 use crate::models::{
-    Action, ActionReason, DuplicateGroup, JunkFile, KeepStrategy, OrganizePlan,
+    Action, ActionReason, DuplicateGroup, KeepStrategy, OrganizePlan,
     PlannedAction, PlanStats, ScannedFile,
 };
 use crate::rules::RuleEngine;
