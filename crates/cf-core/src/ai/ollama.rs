@@ -1,7 +1,7 @@
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
-use crate::models::{AiClassification, AiSource, ScannedFile};
+use crate::models::{AiClassification, ScannedFile};
 use super::prompts::batch_classify_prompt;
 
 pub struct OllamaClassifier {
