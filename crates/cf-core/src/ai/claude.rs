@@ -33,7 +33,7 @@ impl ClaudeClassifier {
             let refs: Vec<&ScannedFile> = chunk.iter().collect();
             let batch_result = self.classify_batch(&refs).await?;
 
-            for (file, classification) in chunk.iter().zip(batch_result.into_iter()) {
+            for (file, classification) in chunk.iter().zip(batch_result) {
                 if let Some(c) = classification {
                     results.push((file.id.clone(), c));
                 }
