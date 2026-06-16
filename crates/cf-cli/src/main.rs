@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use cf_core::{AppSettings, Scanner, ScanOptions, RuleEngine, builtin_rules, Planner, Executor, Journal, Store};
+use cf_core::{Scanner, ScanOptions, RuleEngine, builtin_rules, Planner, Executor, Journal, Store};
 
 #[derive(Parser)]
 #[command(name = "cleanflow", about = "AI-powered file organizer", version)]
@@ -56,20 +56,20 @@ async fn main() -> Result<()> {
     let cli = Cli::parse();
     let data_dir = data_dir();
     let store = Store::open(&data_dir.join("store"))?;
-    let journal = Journal::open(&data_dir.join("journal"))?;
+    let _journal = Journal::open(&data_dir.join("journal"))?;
 
     match cli.command {
         Commands::Scan { path, depth, hidden } => {
             cmd_scan(&path, depth, hidden).await?;
         }
         Commands::Organize { path, execute, no_ai } => {
-            cmd_organize(&path, execute, no_ai, &store, &journal).await?;
+            cmd_organize(&path, execute, no_ai, &store, &_journal).await?;
         }
         Commands::Undo => {
-            cmd_undo(&store, &journal)?;
+            cmd_undo(&store, &_journal)?;
         }
         Commands::History { limit } => {
-            cmd_history(&journal, limit)?;
+            cmd_history(&_journal, limit)?;
         }
         Commands::Rules { action } => {
             cmd_rules(&action, &store)?;
@@ -110,7 +110,7 @@ async fn cmd_organize(
     execute: bool,
     _no_ai: bool,
     store: &Store,
-    journal: &Journal,
+    _journal: &Journal,
 ) -> Result<()> {
     let scanner = Scanner::new();
     let opts = ScanOptions::default();
@@ -154,7 +154,7 @@ async fn cmd_organize(
     Ok(())
 }
 
-fn cmd_undo(store: &Store, journal: &Journal) -> Result<()> {
+fn cmd_undo(_store: &Store, _journal: &Journal) -> Result<()> {
     let exec_journal = Journal::open(&std::env::temp_dir().join("cf_journal"))?;
     let executor = Executor::new(exec_journal);
     match executor.undo_last() {
@@ -164,7 +164,7 @@ fn cmd_undo(store: &Store, journal: &Journal) -> Result<()> {
     Ok(())
 }
 
-fn cmd_history(journal: &Journal, limit: usize) -> Result<()> {
+fn cmd_history(_journal: &Journal, limit: usize) -> Result<()> {
     let exec_journal = Journal::open(&std::env::temp_dir().join("cf_journal"))?;
     let entries = exec_journal.list(limit)?;
     if entries.is_empty() {
