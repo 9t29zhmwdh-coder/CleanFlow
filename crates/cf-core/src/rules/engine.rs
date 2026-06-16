@@ -1,10 +1,9 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use regex::Regex;
 use uuid::Uuid;
 
 use crate::models::{
-    Action, ActionReason, ConditionLogic, FileCategory, PlannedAction,
+    Action, ActionReason, ConditionLogic, PlannedAction,
     Rule, RuleAction, RuleCondition, ScannedFile,
 };
 
