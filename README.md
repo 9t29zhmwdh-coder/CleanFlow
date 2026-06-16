@@ -10,6 +10,7 @@
 
 CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies files with AI, detects duplicates, identifies junk, and generates an actionable plan. One click to execute — with full undo support.
 
+[![CI](https://github.com/9t29zhmwdh-coder/CleanFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/CleanFlow/actions/workflows/ci.yml)
 ![Rust](https://img.shields.io/badge/Rust-1.77+-orange?logo=rust)
 ![Tauri](https://img.shields.io/badge/Tauri-v2-blue?logo=tauri)
 ![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)
