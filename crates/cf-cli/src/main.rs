@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
@@ -79,7 +79,7 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn cmd_scan(path: &PathBuf, depth: Option<usize>, include_hidden: bool) -> Result<()> {
+async fn cmd_scan(path: &Path, depth: Option<usize>, include_hidden: bool) -> Result<()> {
     let scanner = Scanner::new();
     let opts = ScanOptions {
         max_depth: depth,
@@ -106,7 +106,7 @@ async fn cmd_scan(path: &PathBuf, depth: Option<usize>, include_hidden: bool) ->
 }
 
 async fn cmd_organize(
-    path: &PathBuf,
+    path: &Path,
     execute: bool,
     _no_ai: bool,
     store: &Store,
