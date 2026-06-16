@@ -66,7 +66,7 @@ impl Journal {
             .filter_map(|r| r.ok())
             .filter_map(|(_, v)| serde_json::from_slice(&v).ok())
             .collect();
-        entries.sort_by(|a, b| b.executed_at.cmp(&a.executed_at));
+        entries.sort_by_key(|b| std::cmp::Reverse(b.executed_at));
         Ok(entries)
     }
 }
