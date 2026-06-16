@@ -14,7 +14,7 @@ pub struct RuleEngine {
 impl RuleEngine {
     pub fn new(rules: Vec<Rule>) -> Self {
         let mut sorted = rules;
-        sorted.sort_by(|a, b| b.priority.cmp(&a.priority));
+        sorted.sort_by_key(|b| std::cmp::Reverse(b.priority));
         Self { rules: sorted }
     }
 
