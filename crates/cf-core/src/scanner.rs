@@ -89,7 +89,7 @@ impl Scanner {
                     return None;
                 }
                 let n = counter.fetch_add(1, Ordering::Relaxed);
-                if n % 50 == 0 {
+                if n.is_multiple_of(50) {
                     progress_cb(n);
                 }
                 analyze_single(path, opts).ok()
@@ -269,6 +269,7 @@ fn detect_series_group(path: &Path) -> Option<String> {
 
 // ── Deduplication ────────────────────────────────────────────────────────────
 
+#[allow(clippy::ptr_arg)]
 pub fn find_duplicates(files: &mut Vec<ScannedFile>) -> Vec<crate::models::DuplicateGroup> {
     use std::collections::HashMap;
 
