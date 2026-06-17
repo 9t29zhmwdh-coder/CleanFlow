@@ -6,9 +6,9 @@
 
 [🇩🇪 Deutsche Version](README.de.md)
 
-**AI-powered file organizer for macOS, Windows and Linux — built with Rust + Tauri.**
+**AI-powered file organizer for macOS, Windows and Linux, built with Rust and Tauri.**
 
-CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies files with AI, detects duplicates, identifies junk, and generates an actionable plan. One click to execute — with full undo support.
+CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies files with AI, detects duplicates, identifies junk, and generates an actionable plan. One click to execute; with full undo support.
 
 [![CI](https://github.com/9t29zhmwdh-coder/CleanFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/CleanFlow/actions/workflows/ci.yml)
 ![Rust](https://img.shields.io/badge/Rust-1.77+-orange?logo=rust)
@@ -77,7 +77,7 @@ cleanflow rules list
 |---|---|
 | **Ollama (local)** | Set URL in Settings (default: `http://localhost:11434`) |
 | **Ollama (local)** | Install [Ollama](https://ollama.ai), run `ollama pull llama3.2` |
-| **Rule-based only** | No AI required — uses built-in rules only |
+| **Rule-based only** | No AI required: uses built-in rules only |
 
 
 ---
