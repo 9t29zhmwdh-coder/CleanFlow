@@ -6,9 +6,9 @@
 
 [🇬🇧 English Version](README.md)
 
-**KI-gestützter Datei-Organizer für macOS, Windows und Linux — entwickelt mit Rust + Tauri.**
+**KI-gestützter Datei-Organizer für macOS, Windows und Linux, entwickelt mit Rust und Tauri.**
 
-CleanFlow durchsucht Downloads, Desktop, Dokumente oder beliebige Verzeichnisse, klassifiziert Dateien per KI, erkennt Duplikate, findet Junk-Dateien und erstellt einen übersichtlichen Aktionsplan. Ein Klick zum Ausführen — mit vollständigem Undo-System.
+CleanFlow durchsucht Downloads, Desktop, Dokumente oder beliebige Verzeichnisse, klassifiziert Dateien per KI, erkennt Duplikate, findet Junk-Dateien und erstellt einen übersichtlichen Aktionsplan. Ein Klick zum Ausführen; mit vollständigem Undo-System.
 
 ![Rust](https://img.shields.io/badge/Rust-1.77+-orange?logo=rust)
 ![Tauri](https://img.shields.io/badge/Tauri-v2-blue?logo=tauri)
