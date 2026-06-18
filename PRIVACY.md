@@ -1,10 +1,10 @@
-# Privacy Policy — CleanFlow
+# Privacy Policy : CleanFlow
 
 ## Summary
 
 CleanFlow processes all data locally. No data ever leaves your device.
 
-## What We Collect
+## What I Collect
 
 **Nothing.** CleanFlow does not collect, store, transmit, or share any user data.
 
