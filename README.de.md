@@ -84,10 +84,10 @@ Kosten: ~$0.002 pro 1.000 Dateien mit `claude-haiku-4-5`.
 
 ```
 CleanFlow/
-├── crates/cf-core/      — Rust: Scanner, KI, Regeln, Planner, Executor, Undo
-├── crates/cf-cli/       — CLI-Binary (clap)
-├── src-tauri/           — Tauri v2 Backend + IPC-Commands
-└── frontend/            — React + TypeScript + Tailwind
+├── crates/cf-core/      # Rust: Scanner, KI, Regeln, Planner, Executor, Undo
+├── crates/cf-cli/       # CLI-Binary (clap)
+├── src-tauri/           # Tauri v2 Backend + IPC-Commands
+└── frontend/            # React + TypeScript + Tailwind
 ```
 
 ---

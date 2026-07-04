@@ -95,10 +95,10 @@ cleanflow rules list
 
 ```
 CleanFlow/
-├── crates/cf-core/      — Rust: scanner, AI, rules, planner, executor, undo
-├── crates/cf-cli/       — CLI binary (clap)
-├── src-tauri/           — Tauri v2 backend + IPC commands
-└── frontend/            — React + TypeScript + Tailwind
+├── crates/cf-core/      # Rust: scanner, AI, rules, planner, executor, undo
+├── crates/cf-cli/       # CLI binary (clap)
+├── src-tauri/           # Tauri v2 backend + IPC commands
+└── frontend/            # React + TypeScript + Tailwind
 ```
 
 ---
