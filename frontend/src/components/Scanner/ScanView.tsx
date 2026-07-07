@@ -3,10 +3,12 @@ import { FolderOpen, Zap } from "lucide-react";
 import { open as openDialog } from "@tauri-apps/plugin-dialog";
 import { useScanStore } from "../../stores/scanStore";
 import { formatBytes } from "../../lib/format";
+import { useT } from "../../lib/i18n";
 
 export function ScanView() {
   const [path, setPath] = useState("");
   const { status, files, isLoading, startScan, loadPlan } = useScanStore();
+  const t = useT();
 
   const pickFolder = async () => {
     const selected = await openDialog({ directory: true, multiple: false });
@@ -23,7 +25,7 @@ export function ScanView() {
 
   return (
     <div className="flex flex-col gap-6 p-6">
-      <h2 className="text-2xl font-bold text-gray-900">Scan Directory</h2>
+      <h2 className="text-2xl font-bold text-gray-900">{t("scanTitle")}</h2>
 
       {/* Path picker */}
       <div className="flex gap-2">
@@ -31,7 +33,7 @@ export function ScanView() {
           type="text"
           value={path}
           onChange={(e) => setPath(e.target.value)}
-          placeholder="~/Downloads"
+          placeholder={t("pathPlaceholder")}
           className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
         <button
@@ -39,7 +41,7 @@ export function ScanView() {
           className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
         >
           <FolderOpen size={16} />
-          Browse
+          {t("browse")}
         </button>
         <button
           onClick={handleScan}
@@ -47,7 +49,7 @@ export function ScanView() {
           className="flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-2 text-sm font-medium text-white hover:bg-brand-700 disabled:opacity-50"
         >
           <Zap size={16} />
-          Scan
+          {t("scan")}
         </button>
       </div>
 
@@ -75,11 +77,11 @@ export function ScanView() {
       {isDone && files.length > 0 && (
         <div className="rounded-lg border border-gray-200 bg-white p-4">
           <div className="mb-4 grid grid-cols-4 gap-4 text-center">
-            <Stat label="Files"     value={files.length.toString()} />
-            <Stat label="Junk"      value={files.filter(f => f.flags.is_junk).length.toString()} color="red" />
-            <Stat label="Duplicates" value={files.filter(f => f.flags.is_duplicate).length.toString()} color="yellow" />
+            <Stat label={t("statFiles")}      value={files.length.toString()} />
+            <Stat label={t("statJunk")}       value={files.filter(f => f.flags.is_junk).length.toString()} color="red" />
+            <Stat label={t("statDuplicates")} value={files.filter(f => f.flags.is_duplicate).length.toString()} color="yellow" />
             <Stat
-              label="Total Size"
+              label={t("statTotalSize")}
               value={formatBytes(files.reduce((s, f) => s + f.size_bytes, 0))}
             />
           </div>
@@ -87,7 +89,7 @@ export function ScanView() {
             onClick={loadPlan}
             className="w-full rounded-lg bg-brand-600 py-2 text-sm font-medium text-white hover:bg-brand-700"
           >
-            Generate CleanFlow Plan →
+            {t("generatePlan")} →
           </button>
         </div>
       )}

@@ -1,6 +1,7 @@
 import { ArrowRight, Trash2, Tag, FolderPlus } from "lucide-react";
 import type { PlannedAction } from "../../lib/tauri";
 import { basename, reasonLabel } from "../../lib/format";
+import { useT } from "../../lib/i18n";
 import clsx from "clsx";
 
 interface Props {
@@ -54,6 +55,7 @@ function ActionIcon({ kind }: { kind: string }) {
 }
 
 function ActionDescription({ action }: { action: PlannedAction["action"] }) {
+  const t = useT();
   switch (action.kind) {
     case "Move":
       return (
@@ -76,13 +78,13 @@ function ActionDescription({ action }: { action: PlannedAction["action"] }) {
     case "Tag":
       return (
         <span>
-          Tag: {action.tags.map(t => (
-            <span key={t} className="ml-1 rounded bg-gray-100 px-1.5 py-0.5 text-xs">{t}</span>
+          {t("tagPrefix")} {action.tags.map(tag => (
+            <span key={tag} className="ml-1 rounded bg-gray-100 px-1.5 py-0.5 text-xs">{tag}</span>
           ))}
         </span>
       );
     case "CreateDirectory":
-      return <span className="truncate text-gray-500">Create: {action.path}</span>;
+      return <span className="truncate text-gray-500">{t("createPrefix")} {action.path}</span>;
   }
 }
 

@@ -33,7 +33,7 @@ pub struct RuleMatch {
 }
 
 #[tauri::command]
-pub fn test_rule(rule: Rule, files: Vec<ScannedFile>, state: State<'_, AppState>) -> Result<Vec<RuleMatch>> {
+pub fn test_rule(rule: Rule, files: Vec<ScannedFile>, _state: State<'_, AppState>) -> Result<Vec<RuleMatch>> {
     let engine = cf_core::RuleEngine::new(vec![rule.clone()]);
     let matches: Vec<RuleMatch> = files
         .iter()

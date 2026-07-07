@@ -7,10 +7,6 @@ pub enum CfError {
     Io(String),
     #[error("Scan not found: {0}")]
     ScanNotFound(String),
-    #[error("AI error: {0}")]
-    Ai(String),
-    #[error("Rule error: {0}")]
-    Rule(String),
     #[error("{0}")]
     Other(String),
 }

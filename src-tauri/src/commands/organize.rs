@@ -2,7 +2,7 @@ use tauri::State;
 
 use cf_core::{
     builtin_rules,
-    executor::{ExecutionResult, UndoResult},
+    executor::ExecutionResult,
     models::OrganizePlan,
     Executor, Planner, RuleEngine,
 };

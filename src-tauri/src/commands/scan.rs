@@ -1,8 +1,7 @@
 use std::path::PathBuf;
-use std::sync::Arc;
 use std::time::Instant;
 
-use tauri::{AppHandle, Emitter, State};
+use tauri::{AppHandle, Emitter, Manager, State};
 use uuid::Uuid;
 
 use cf_core::{
@@ -27,7 +26,6 @@ pub async fn scan_directory(
 ) -> Result<String> {
     let scan_id = Uuid::new_v4().to_string();
     let root = PathBuf::from(&path);
-    let sid = scan_id.clone();
     let opts = ScanOptions {
         follow_links: options.as_ref().and_then(|o| o.follow_links).unwrap_or(false),
         max_depth: options.as_ref().and_then(|o| o.max_depth),
@@ -69,11 +67,21 @@ pub async fn scan_directory(
         emit_status(&app_clone, &scan_id_clone, ScanPhase::Analyzing, found, 0, start.elapsed().as_millis() as u64);
 
         // Analyze
-        let mut files = scanner.analyze_files(paths, &opts, |n| {
+        let files = scanner.analyze_files(paths, &opts, |n| {
             emit_status(&app_clone, &scan_id_clone, ScanPhase::Analyzing, found, n, start.elapsed().as_millis() as u64);
         });
 
-        emit_status(&app_clone, &scan_id_clone, ScanPhase::Done, found, files.len(), start.elapsed().as_millis() as u64);
+        let elapsed_ms = start.elapsed().as_millis() as u64;
+        let analyzed = files.len();
+
+        if let Some(state) = app_clone.try_state::<AppState>() {
+            let mut scans = state.scans.lock().unwrap();
+            if let Some(session) = scans.get_mut(&scan_id_clone) {
+                session.files = files;
+            }
+        }
+
+        emit_status(&app_clone, &scan_id_clone, ScanPhase::Done, found, analyzed, elapsed_ms);
     });
 
     Ok(scan_id)
@@ -85,7 +93,7 @@ pub fn get_scan_status(scan_id: String, state: State<'_, AppState>) -> Result<Sc
     scans
         .get(&scan_id)
         .map(|s| s.status.clone())
-        .ok_or_else(|| crate::error::CfError::ScanNotFound(scan_id))
+        .ok_or(crate::error::CfError::ScanNotFound(scan_id))
 }
 
 #[tauri::command]
