@@ -7,7 +7,7 @@ import { useT } from "../../lib/i18n";
 
 export function ScanView() {
   const [path, setPath] = useState("");
-  const { status, files, isLoading, startScan, loadPlan } = useScanStore();
+  const { status, files, isLoading, error, startScan, loadPlan } = useScanStore();
   const t = useT();
 
   const pickFolder = async () => {
@@ -52,6 +52,12 @@ export function ScanView() {
           {t("scan")}
         </button>
       </div>
+
+      {error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
 
       {/* Progress */}
       {isLoading && status && (

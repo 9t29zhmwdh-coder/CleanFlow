@@ -75,8 +75,7 @@ pub async fn scan_directory(
         let analyzed = files.len();
 
         if let Some(state) = app_clone.try_state::<AppState>() {
-            let mut scans = state.scans.lock().unwrap();
-            if let Some(session) = scans.get_mut(&scan_id_clone) {
+            if let Some(session) = state.scans.lock().unwrap().get_mut(&scan_id_clone) {
                 session.files = files;
             }
         }
@@ -121,5 +120,10 @@ fn emit_status(app: &AppHandle, scan_id: &str, phase: ScanPhase, found: usize, a
         elapsed_ms,
         errors: vec![],
     };
+    if let Some(state) = app.try_state::<AppState>() {
+        if let Some(session) = state.scans.lock().unwrap().get_mut(scan_id) {
+            session.status = status.clone();
+        }
+    }
     let _ = app.emit(&format!("scan://status/{scan_id}"), &status);
 }
