@@ -31,20 +31,35 @@ export const useScanStore = create<ScanStore>((set, get) => ({
       const scanId = await api.scanDirectory(path);
       set({ scanId });
 
-      const unlisten = await listenScanStatus(scanId, async (status) => {
+      let settled = false;
+      const handleStatus = async (status: ScanStatus) => {
+        if (settled) return;
         set({ status });
         if (status.phase === "Done") {
+          settled = true;
           unlisten();
-          const files = await api.getScannedFiles(scanId);
-          set({ files, isLoading: false });
+          try {
+            const files = await api.getScannedFiles(scanId);
+            set({ files, isLoading: false });
+          } catch (e) {
+            set({ isLoading: false, error: String(e) });
+          }
         } else if (status.phase === "Cancelled") {
+          settled = true;
           unlisten();
           set({ isLoading: false });
         } else if (typeof status.phase === "object" && "Error" in status.phase) {
+          settled = true;
           unlisten();
           set({ isLoading: false, error: status.phase.Error });
         }
-      });
+      };
+
+      const unlisten = await listenScanStatus(scanId, handleStatus);
+
+      // The scan may already have finished (very small directories) before the
+      // listener above was attached; poll once to catch a missed Done event.
+      await handleStatus(await api.getScanStatus(scanId));
     } catch (e) {
       set({ isLoading: false, error: String(e) });
     }

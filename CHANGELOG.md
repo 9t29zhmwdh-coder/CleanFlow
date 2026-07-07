@@ -6,6 +6,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [0.1.2] - 2026-07-07
+
+### Fixed
+
+- Tailwind CSS was never actually compiled: `frontend/` had no `postcss.config.js`, so Vite passed the raw `@tailwind` directives straight through to the output CSS untouched. The app rendered with none of its intended styling (colors, grid layouts, spacing) in every build, including the previous 0.1.1 release
+- The entire scan progress flow was broken: no `src-tauri/capabilities/` file existed, so Tauri's permission system rejected every `event.listen` call from the frontend with a runtime error, meaning scan results never appeared no matter how long you waited after clicking Scan
+- `state.scans[id].status` was only ever set once at scan start and never updated afterwards, so `get_scan_status` always reported the initial "Walking" phase
+- A follow-up race condition where a very fast scan's completion event could be emitted before the frontend had finished registering its listener is now handled by polling current status once after the listener attaches
+- Scan errors were silently swallowed with no UI feedback; errors are now shown in the Scan view
+
 ## [0.1.1] - 2026-07-07
 
 ### Fixed
