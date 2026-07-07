@@ -12,6 +12,12 @@ CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies 
 
 [![CI](https://github.com/9t29zhmwdh-coder/CleanFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/CleanFlow/actions) ![Platform](https://img.shields.io/badge/Platform-macOS_%7C_Windows-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![Tauri](https://img.shields.io/badge/Tauri-24C8D8?logo=tauri&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white)
 
+> **How it runs:** CleanFlow is a native desktop app, not a server or browser tool. It opens as its own window and has no tray icon or background service; it only runs while the window is open.
+
+![CleanFlow](docs/screenshot.png)
+
+**In practice:** you scan a folder, review a generated plan of moves, trashes and tags, and execute only what you select; every executed action can be undone from the journal. AI (Claude or a local Ollama model) only assists with classification and suggestions; the underlying scan, rule matching, and undo logic works without it.
+
 ---
 
 ## Features
@@ -19,7 +25,7 @@ CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies 
 | Feature | Description |
 |---|---|
 | **File Analysis** | MIME detection, SHA-256 deduplication, series grouping |
-| **AI Classification** | Local AI classifies invoices, contracts, screenshots, code, etc. |
+| **AI Classification** | Claude or a local Ollama model classifies invoices, contracts, screenshots, code, etc. |
 | **Clean-Up Engine** | Detects DMGs, .DS_Store, temp files, zombie files, old versions |
 | **Rule Engine** | Built-in + custom rules (e.g. "PDF + invoice → Documents/Finance/2026") |
 | **Action Preview** | Review every proposed action before executing |
@@ -67,13 +73,26 @@ cleanflow rules list
 
 ---
 
+## Uninstall / Cleanup
+
+CleanFlow is a self-contained app with no installer and no background service.
+
+- **macOS:** delete the app bundle, then remove `~/.cleanflow/` (settings, scan journal).
+- **Windows:** remove the app folder, then delete `%USERPROFILE%\.cleanflow\`.
+- API keys are stored in the OS keychain, not in `~/.cleanflow/`; remove them separately via Keychain Access (macOS) or Credential Manager (Windows) if you added one.
+- CleanFlow never touches your original files outside the folders you explicitly scan and organize; there is nothing else to clean up.
+
+---
+
 ## AI Providers
 
 | Provider | Setup |
 |---|---|
-| **Ollama (local)** | Set URL in Settings (default: `http://localhost:11434`) |
+| **Claude (Anthropic)** | Enter your API key in Settings; stored securely in the OS keychain |
 | **Ollama (local)** | Install [Ollama](https://ollama.ai), run `ollama pull llama3.2` |
-| **Rule-based only** | No AI required: uses built-in rules only |
+| **Rule-based only** | No AI provider required |
+
+Cost: ~$0.002 per 1,000 files with `claude-haiku-4-5`.
 
 
 ---
