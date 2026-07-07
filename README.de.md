@@ -14,6 +14,12 @@ CleanFlow durchsucht Downloads, Desktop, Dokumente oder beliebige Verzeichnisse,
 ![Plattform](https://img.shields.io/badge/Plattform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)
 ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green)
 
+> **So läuft es:** CleanFlow ist eine native Desktop-App, kein Server und kein Browser-Tool. Sie öffnet sich als eigenes Fenster und hat kein Tray-Icon und keinen Hintergrunddienst; sie läuft nur, solange das Fenster offen ist.
+
+![CleanFlow](docs/screenshot.de.png)
+
+**In der Praxis:** du scannst einen Ordner, prüfst einen erstellten Plan aus Verschiebungen, Papierkorb-Aktionen und Tags, und führst nur aus, was du auswählst; jede ausgeführte Aktion kann über das Journal rückgängig gemacht werden. KI (Claude oder ein lokales Ollama-Modell) unterstützt nur bei Klassifizierung und Vorschlägen; die zugrunde liegende Scan-, Regel- und Undo-Logik funktioniert auch ohne sie.
+
 ---
 
 ## Funktionen
@@ -21,7 +27,7 @@ CleanFlow durchsucht Downloads, Desktop, Dokumente oder beliebige Verzeichnisse,
 | Funktion | Beschreibung |
 |---|---|
 | **Datei-Analyse** | MIME-Erkennung, SHA-256-Duplikate, Serien-Gruppen |
-| **KI-Klassifizierung** | Claude Haiku erkennt Rechnungen, Verträge, Screenshots, Code |
+| **KI-Klassifizierung** | Claude oder ein lokales Ollama-Modell erkennt Rechnungen, Verträge, Screenshots, Code |
 | **Clean-Up-Engine** | DMGs, .DS_Store, Temp-Dateien, Zombie-Dateien, alte Versionen |
 | **Regelwerk** | Eingebaute + benutzerdefinierte Regeln |
 | **Aktionsvorschau** | Jede Aktion vor der Ausführung überprüfen |
@@ -65,6 +71,17 @@ cleanflow organize ~/Downloads --execute
 cleanflow undo
 cleanflow rules list
 ```
+
+---
+
+## Deinstallation / Aufräumen
+
+CleanFlow ist eine eigenständige App ohne Installer und ohne Hintergrunddienst.
+
+- **macOS:** App-Bundle löschen, danach `~/.cleanflow/` (Einstellungen, Scan-Journal) entfernen.
+- **Windows:** App-Ordner entfernen, danach `%USERPROFILE%\.cleanflow\` löschen.
+- API-Schlüssel liegen im OS-Schlüsselbund, nicht in `~/.cleanflow/`; bei Bedarf separat über Schlüsselbundverwaltung (macOS) oder Anmeldeinformationsverwaltung (Windows) entfernen.
+- CleanFlow greift nie auf Dateien ausserhalb der explizit gescannten und organisierten Ordner zu; es gibt sonst nichts aufzuräumen.
 
 ---
 
