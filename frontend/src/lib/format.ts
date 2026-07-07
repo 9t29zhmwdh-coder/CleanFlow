@@ -5,8 +5,10 @@ export function formatBytes(bytes: number): string {
   return `${bytes} B`;
 }
 
+import { getLang, t } from "./i18n";
+
 export function formatDate(ts: number): string {
-  return new Date(ts * 1000).toLocaleDateString(undefined, {
+  return new Date(ts * 1000).toLocaleDateString(getLang() === "de" ? "de-CH" : "en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -15,10 +17,10 @@ export function formatDate(ts: number): string {
 
 export function formatRelative(ts: number): string {
   const diff = Date.now() / 1000 - ts;
-  if (diff < 60)        return "just now";
-  if (diff < 3600)      return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400)     return `${Math.floor(diff / 3600)}h ago`;
-  if (diff < 86400 * 7) return `${Math.floor(diff / 86400)}d ago`;
+  if (diff < 60)        return t("justNow");
+  if (diff < 3600)      return t("minutesAgo", { n: Math.floor(diff / 60) });
+  if (diff < 86400)     return t("hoursAgo", { n: Math.floor(diff / 3600) });
+  if (diff < 86400 * 7) return t("daysAgo", { n: Math.floor(diff / 86400) });
   return formatDate(ts);
 }
 
@@ -28,11 +30,11 @@ export function basename(path: string): string {
 
 export function reasonLabel(reason: { type: string; [k: string]: unknown }): string {
   switch (reason.type) {
-    case "RuleMatch":      return `Rule: ${reason.rule_name}`;
-    case "AiSuggestion":   return `AI: ${reason.explanation}`;
-    case "DuplicateGroup": return `Duplicate`;
-    case "JunkDetected":   return `Junk: ${reason.junk_type}`;
-    case "OldVersion":     return `Old version`;
+    case "RuleMatch":      return t("reasonRule", { name: String(reason.rule_name) });
+    case "AiSuggestion":   return t("reasonAi", { explanation: String(reason.explanation) });
+    case "DuplicateGroup": return t("reasonDuplicate");
+    case "JunkDetected":   return t("reasonJunk", { type: String(reason.junk_type) });
+    case "OldVersion":     return t("reasonOldVersion");
     default:               return reason.type;
   }
 }

@@ -3,12 +3,15 @@ import { Dashboard } from "./components/Dashboard/Dashboard";
 import { ScanView } from "./components/Scanner/ScanView";
 import { ActionPreview } from "./components/Preview/ActionPreview";
 import { useScanStore } from "./stores/scanStore";
+import { useT, useLangStore } from "./lib/i18n";
 
 type View = "dashboard" | "scan" | "settings";
 
 export default function App() {
   const [view, setView] = useState<View>("dashboard");
   const { plan } = useScanStore();
+  const t = useT();
+  const { lang, toggle } = useLangStore();
 
   // When a plan is ready, automatically show preview
   const activeView = plan ? "preview" : view;
@@ -18,10 +21,16 @@ export default function App() {
       {/* Sidebar */}
       <div className="flex flex-1 overflow-hidden">
         <nav className="flex w-48 flex-col gap-1 border-r border-gray-200 bg-white p-3">
-          <NavItem label="Home"       active={activeView === "dashboard"} onClick={() => setView("dashboard")} />
-          <NavItem label="Scan"       active={activeView === "scan"}      onClick={() => setView("scan")} />
-          <NavItem label="Plan"       active={activeView === "preview"}   onClick={() => {}} disabled={!plan} />
-          <NavItem label="Settings"   active={activeView === "settings"}  onClick={() => setView("settings")} />
+          <NavItem label={t("navHome")}     active={activeView === "dashboard"} onClick={() => setView("dashboard")} />
+          <NavItem label={t("navScan")}     active={activeView === "scan"}      onClick={() => setView("scan")} />
+          <NavItem label={t("navPlan")}     active={activeView === "preview"}   onClick={() => {}} disabled={!plan} />
+          <NavItem label={t("navSettings")} active={activeView === "settings"}  onClick={() => setView("settings")} />
+          <button
+            onClick={toggle}
+            className="mt-auto rounded-lg px-3 py-2 text-left text-xs font-medium text-gray-400 hover:bg-gray-100 hover:text-gray-700"
+          >
+            {lang === "en" ? "Deutsch" : "English"}
+          </button>
         </nav>
 
         {/* Main content */}
@@ -59,10 +68,11 @@ function NavItem({
 }
 
 function SettingsPlaceholder() {
+  const t = useT();
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
-      <p className="mt-2 text-gray-500">AI provider, API keys, custom rules.</p>
+      <h2 className="text-2xl font-bold text-gray-900">{t("settingsTitle")}</h2>
+      <p className="mt-2 text-gray-500">{t("settingsDesc")}</p>
     </div>
   );
 }

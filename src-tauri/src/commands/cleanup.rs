@@ -8,7 +8,7 @@ pub fn find_duplicates(scan_id: String, state: State<'_, AppState>) -> Result<Ve
     let mut scans = state.scans.lock().unwrap();
     let session = scans
         .get_mut(&scan_id)
-        .ok_or_else(|| crate::error::CfError::ScanNotFound(scan_id))?;
+        .ok_or(crate::error::CfError::ScanNotFound(scan_id))?;
 
     let groups = cf_core::find_duplicates(&mut session.files);
     Ok(groups)
@@ -19,7 +19,7 @@ pub fn find_junk(scan_id: String, state: State<'_, AppState>) -> Result<Vec<Junk
     let scans = state.scans.lock().unwrap();
     let session = scans
         .get(&scan_id)
-        .ok_or_else(|| crate::error::CfError::ScanNotFound(scan_id))?;
+        .ok_or(crate::error::CfError::ScanNotFound(scan_id))?;
 
     let junk: Vec<JunkFile> = session
         .files
@@ -42,7 +42,7 @@ pub fn find_old_versions(scan_id: String, state: State<'_, AppState>) -> Result<
     let scans = state.scans.lock().unwrap();
     let session = scans
         .get(&scan_id)
-        .ok_or_else(|| crate::error::CfError::ScanNotFound(scan_id))?;
+        .ok_or(crate::error::CfError::ScanNotFound(scan_id))?;
 
     let mut groups: HashMap<String, Vec<_>> = HashMap::new();
     for f in session.files.iter().filter(|f| f.flags.is_old_version) {

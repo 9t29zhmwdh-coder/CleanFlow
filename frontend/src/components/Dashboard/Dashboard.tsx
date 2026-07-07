@@ -1,30 +1,32 @@
-import { FolderSearch, Zap, Settings } from "lucide-react";
+import { FolderSearch, Settings } from "lucide-react";
+import { useT } from "../../lib/i18n";
 
 interface Props {
   onNavigate: (view: "scan" | "settings") => void;
 }
 
 export function Dashboard({ onNavigate }: Props) {
+  const t = useT();
   return (
     <div className="flex flex-col items-center justify-center gap-8 p-12 text-center">
       <div>
         <div className="mb-2 text-5xl">✨</div>
         <h1 className="text-3xl font-bold text-gray-900">CleanFlow</h1>
-        <p className="mt-2 text-gray-500">AI-powered file organizer</p>
+        <p className="mt-2 text-gray-500">{t("tagline")}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4 w-full max-w-md">
         <ActionCard
           icon={<FolderSearch size={28} />}
-          title="Scan Directory"
-          description="Analyse a folder and get an AI-powered organisation plan"
+          title={t("cardScanTitle")}
+          description={t("cardScanDesc")}
           onClick={() => onNavigate("scan")}
           primary
         />
         <ActionCard
           icon={<Settings size={28} />}
-          title="Settings"
-          description="Configure AI provider, rules and output preferences"
+          title={t("cardSettingsTitle")}
+          description={t("cardSettingsDesc")}
           onClick={() => onNavigate("settings")}
         />
       </div>
