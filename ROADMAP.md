@@ -33,8 +33,11 @@
 - Stable public API for `cf-core` (semver)
 - Full test coverage (unit + integration)
 - Packaged installers (`.dmg`, `.msi`, `.AppImage`)
-- Localization (EN + DE)
 - Comprehensive documentation site
+
+## Under Consideration
+
+- Optional handoff to [LifeSort](https://github.com/9t29zhmwdh-coder/LifeSort) for long-term filing: CleanFlow's job is a one-off cleanup pass (junk, duplicates, trash), LifeSort's is ongoing archival sorting (Photos/Documents/Media into a folder structure). A CLI pipeline (`cleanflow scan --pass-through | lifesort import`) could let files CleanFlow keeps but doesn't just delete get routed straight into LifeSort's classifier instead of being left where they landed. Not scoped yet.
 
 ## Out of Scope
 
