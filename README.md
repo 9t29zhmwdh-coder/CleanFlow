@@ -42,6 +42,8 @@ CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies 
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
 - macOS / Windows / Linux (Tauri v2)
 
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
 ---
 
 ## Quick Start
