@@ -22,6 +22,10 @@ CleanFlow durchsucht Downloads, Desktop, Dokumente oder beliebige Verzeichnisse,
 
 ---
 
+> 🌱 Neu hier? → [Schritt-für-Schritt-Anleitung für Einsteiger](GETTING_STARTED.md)
+
+---
+
 ## Funktionen
 
 | Funktion | Beschreibung |
