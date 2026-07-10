@@ -20,6 +20,10 @@ CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies 
 
 ---
 
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
+---
+
 ## Features
 
 | Feature | Description |
@@ -41,8 +45,6 @@ CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies 
 - [Node.js](https://nodejs.org/) 20+
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
 - macOS / Windows / Linux (Tauri v2)
-
-> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
 
 ---
 
