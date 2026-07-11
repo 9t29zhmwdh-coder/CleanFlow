@@ -1,6 +1,6 @@
-# Roadmap — CleanFlow
+# Roadmap: CleanFlow
 
-## v0.1.0 — Initial Release (2026-06-12) ✅
+## v0.1.0, Initial Release (2026-06-12) ✅
 
 - Recursive file scanner (Downloads, Desktop, Documents)
 - AI-powered file classification via Ollama
@@ -11,7 +11,7 @@
 - SQLite undo journal
 - Tauri v2 desktop shell (macOS, Windows, Linux)
 
-## v0.2.0 — Rules & Scheduling
+## v0.2.0, Rules & Scheduling
 
 - User-defined classification rules (TOML-based)
 - Scheduled scans (daily/weekly via system scheduler)
@@ -20,7 +20,7 @@
 - Export cleanup report as PDF/CSV
 - Improved duplicate grouping UI
 
-## v0.3.0 — Smart Suggestions & Multi-Folder
+## v0.3.0, Smart Suggestions & Multi-Folder
 
 - Scan arbitrary folders (not just standard locations)
 - AI-generated folder structure suggestions
@@ -41,7 +41,11 @@
 
 ## Out of Scope
 
-- Cloud storage scanning (Google Drive, OneDrive, iCloud) — privacy boundary
+- Cloud storage scanning (Google Drive, OneDrive, iCloud): privacy boundary
 - Automatic uploads or backups to any remote service
 - Windows Explorer / Finder integration via shell extensions
 - Mobile platforms (iOS, Android)
+
+## Dual-Licensing Readiness
+
+Assessed 2026-07-11: Community-only, not a Dual-Licensing candidate. CleanFlow is a single-user desktop productivity tool (personal file organization) with no team, fleet or multi-tenant dimension anywhere on the roadmap, unlike the governance/observability tools in this portfolio where multi-subscription or multi-tenant scope is a natural Enterprise-tier split point. The plugin system planned for v0.3.0 is the only feature with any paid-extension potential, but it is not implemented yet and would need real third-party plugin demand to justify a Commercial tier. Revisit only if a genuine team/business use case (e.g. shared cleanup policies across a company's fleet) emerges.
