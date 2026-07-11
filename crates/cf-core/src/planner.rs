@@ -89,7 +89,7 @@ impl<'a> Planner<'a> {
                     canonical_path: file.path.clone(),
                 },
                 priority: 40,
-                selected: false, // Off by default — user decides
+                selected: false, // Off by default: user decides
             });
         }
 

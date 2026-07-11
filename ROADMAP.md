@@ -28,7 +28,7 @@
 - Per-category statistics and disk usage visualization
 - Plugin system for custom post-process actions
 
-## v1.0.0 — Stable Release
+## v1.0.0: Stable Release
 
 - Stable public API for `cf-core` (semver)
 - Full test coverage (unit + integration)

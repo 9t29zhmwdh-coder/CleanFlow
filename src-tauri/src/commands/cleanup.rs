@@ -85,5 +85,5 @@ fn junk_label(f: &cf_core::models::ScannedFile) -> String {
 fn junk_reason(f: &cf_core::models::ScannedFile) -> String {
     let name = f.path.file_name().unwrap_or_default().to_string_lossy().to_lowercase();
     if name == ".ds_store" { return "macOS metadata file, safe to delete".into(); }
-    format!("Detected as {} — typically safe to remove", junk_label(f))
+    format!("Detected as {}: typically safe to remove", junk_label(f))
 }

@@ -9,7 +9,7 @@ For each file return an object with these fields:
 - "id": the file id (string, unchanged from input)
 - "category": one of: Invoice, Contract, Receipt, Screenshot, Photo, Video, Audio, Code, Document, Spreadsheet, Archive, Installer, Temporary, Unknown
 - "tags": array of lowercase descriptive tags (max 5), e.g. ["finance", "2024", "work"]
-- "confidence": float 0.0–1.0
+- "confidence": float 0.0-1.0
 - "summary": one-sentence description (optional, null if unclear)
 
 Return ONLY a valid JSON array, no markdown, no explanation."#.to_string();

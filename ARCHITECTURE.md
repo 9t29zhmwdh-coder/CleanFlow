@@ -1,4 +1,4 @@
-# Architecture — CleanFlow
+# Architecture: CleanFlow
 
 ## Overview
 
@@ -55,11 +55,11 @@ CleanFlow/
 
 ## Data Flow
 
-1. **Scan** — `scanner` walks target directories (Downloads, Desktop, Documents) and collects file metadata (path, size, MIME type, last access, hash for duplicate detection).
-2. **Classify** — `classifier` sends file metadata as prompts to Ollama; receives category labels (document, media, archive, junk, duplicate, etc.). User-defined rules in `rules/` override AI suggestions.
-3. **Plan** — `planner` assembles a structured cleanup plan: a list of actions (move to category folder, delete junk, archive duplicates) with reversibility annotations.
-4. **Execute** — `executor` applies the plan and writes every action to the SQLite undo journal before touching the filesystem.
-5. **Undo** — any executed plan can be fully reversed by replaying the undo journal in reverse order.
+1. **Scan**: `scanner` walks target directories (Downloads, Desktop, Documents) and collects file metadata (path, size, MIME type, last access, hash for duplicate detection).
+2. **Classify**: `classifier` sends file metadata as prompts to Ollama; receives category labels (document, media, archive, junk, duplicate, etc.). User-defined rules in `rules/` override AI suggestions.
+3. **Plan**: `planner` assembles a structured cleanup plan: a list of actions (move to category folder, delete junk, archive duplicates) with reversibility annotations.
+4. **Execute**: `executor` applies the plan and writes every action to the SQLite undo journal before touching the filesystem.
+5. **Undo**: any executed plan can be fully reversed by replaying the undo journal in reverse order.
 
 ## External Dependencies
 
