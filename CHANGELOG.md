@@ -6,6 +6,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [0.1.5] - 2026-07-11
+
+### Fixed
+
+- Added Linux to the Platform badge in README.md/README.de.md; the tagline already mentioned Linux support but the badge only listed macOS and Windows
+- Removed a stray duplicate "Plattform"/"Lizenz" badge from README.de.md left over from an earlier edit
+
 ## [0.1.4] - 2026-07-11
 
 ### Fixed
