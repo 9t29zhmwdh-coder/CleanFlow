@@ -1,4 +1,4 @@
-# Security Policy — CleanFlow
+# Security Policy: CleanFlow
 
 ## Supported Versions
 
