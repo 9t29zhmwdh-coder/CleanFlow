@@ -6,7 +6,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
-## [0.1.6] - 2026-07-11
+## [0.2.6] - 2026-07-11
+
+### Fixed
+
+- SemVer correction: v0.1.1 added a genuine new feature (full English/German UI with a language toggle) but was versioned as a patch. Renumbered v0.1.1 through v0.1.6 to v0.2.0 through v0.2.5 (same commits, tags and releases recreated at identical SHAs), per the portfolio's SemVer discipline (patch = fix, minor = feature, major = finished product).
+
+## [0.2.5] - 2026-07-11
 
 ### Added
 
@@ -16,20 +22,20 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 - Removed em-dashes from ROADMAP.md and SECURITY.md headings and body text.
 
-## [0.1.5] - 2026-07-11
+## [0.2.4] - 2026-07-11
 
 ### Fixed
 
 - Added Linux to the Platform badge in README.md/README.de.md; the tagline already mentioned Linux support but the badge only listed macOS and Windows
 - Removed a stray duplicate "Plattform"/"Lizenz" badge from README.de.md left over from an earlier edit
 
-## [0.1.4] - 2026-07-11
+## [0.2.3] - 2026-07-11
 
 ### Fixed
 
 - Updated actions/setup-node to its latest major version in CI, since GitHub is deprecating the Node.js 20 runtime and the previous version was being forced onto Node 24 and crashing during post-run cleanup.
 
-## [0.1.3] - 2026-07-10
+## [0.2.2] - 2026-07-10
 
 ### Changed
 
@@ -39,17 +45,17 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 - Added the "New here?" beginner guide callout to README.de.md (was missing)
 
-## [0.1.2] - 2026-07-07
+## [0.2.1] - 2026-07-07
 
 ### Fixed
 
-- Tailwind CSS was never actually compiled: `frontend/` had no `postcss.config.js`, so Vite passed the raw `@tailwind` directives straight through to the output CSS untouched. The app rendered with none of its intended styling (colors, grid layouts, spacing) in every build, including the previous 0.1.1 release
+- Tailwind CSS was never actually compiled: `frontend/` had no `postcss.config.js`, so Vite passed the raw `@tailwind` directives straight through to the output CSS untouched. The app rendered with none of its intended styling (colors, grid layouts, spacing) in every build, including the previous 0.2.0 release
 - The entire scan progress flow was broken: no `src-tauri/capabilities/` file existed, so Tauri's permission system rejected every `event.listen` call from the frontend with a runtime error, meaning scan results never appeared no matter how long you waited after clicking Scan
 - `state.scans[id].status` was only ever set once at scan start and never updated afterwards, so `get_scan_status` always reported the initial "Walking" phase
 - A follow-up race condition where a very fast scan's completion event could be emitted before the frontend had finished registering its listener is now handled by polling current status once after the listener attaches
 - Scan errors were silently swallowed with no UI feedback; errors are now shown in the Scan view
 
-## [0.1.1] - 2026-07-07
+## [0.2.0] - 2026-07-07
 
 ### Fixed
 
@@ -82,6 +88,3 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 - `cf-cli` binary for headless/scripted operation
 - Tauri v2 desktop shell for macOS, Windows, and Linux
 - React/TypeScript frontend with Zustand state management
-
-[0.1.1]: https://github.com/9t29zhmwdh-coder/CleanFlow/releases/tag/v0.1.1
-[0.1.0]: https://github.com/9t29zhmwdh-coder/CleanFlow/releases/tag/v0.1.0
