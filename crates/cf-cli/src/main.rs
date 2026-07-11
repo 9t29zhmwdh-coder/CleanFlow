@@ -21,7 +21,7 @@ enum Commands {
         #[arg(long, default_value = "false", help = "Include hidden files")]
         hidden: bool,
     },
-    /// Organize files — shows a preview by default
+    /// Organize files: shows a preview by default
     Organize {
         path: PathBuf,
         #[arg(long, help = "Actually execute (without this flag, dry-run only)")]
@@ -139,7 +139,7 @@ async fn cmd_organize(
 
     if execute {
         println!("\nExecuting…");
-        // Journal needs to be stored somewhere accessible — use dummy path
+        // Journal needs to be stored somewhere accessible: use dummy path
         let exec_journal = Journal::open(&std::env::temp_dir().join("cf_journal"))?;
         let executor = Executor::new(exec_journal);
         let result = executor.execute_plan(&plan, None)?;

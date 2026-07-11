@@ -6,6 +6,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [0.2.7] - 2026-07-11
+
+### Fixed
+
+- Removed an eszett and em-dashes across the repo (TEMPLATE_NOTES.md, ROADMAP.md, SKELETON.md, CONTRIBUTING.md, ARCHITECTURE.md, and five Rust source files). Swiss German orthography.
+
 ## [0.2.6] - 2026-07-11
 
 ### Fixed

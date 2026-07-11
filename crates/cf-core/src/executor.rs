@@ -145,7 +145,7 @@ fn undo_action(action: &Action, undo_data: &UndoData) -> anyhow::Result<()> {
             std::fs::rename(current_path, original_path)?;
         }
         UndoData::FileWasTrashed { original_path } => {
-            // Restore from trash not universally possible — warn
+            // Restore from trash not universally possible: warn
             tracing::warn!("Cannot restore from trash: {:?}", original_path);
         }
         UndoData::FileWasRenamed { original_name } => {
