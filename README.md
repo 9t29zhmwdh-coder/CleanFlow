@@ -16,6 +16,12 @@ CleanFlow scans your Downloads, Desktop, Documents or any directory, classifies 
 
 ![CleanFlow](docs/screenshot.png)
 
+---
+
+> 💾 **Download:** [macOS (DMG)](https://github.com/9t29zhmwdh-coder/CleanFlow/releases/latest/download/CleanFlow.dmg) · [Windows (Installer)](https://github.com/9t29zhmwdh-coder/CleanFlow/releases/latest/download/CleanFlow-Setup.exe) · [Linux (AppImage)](https://github.com/9t29zhmwdh-coder/CleanFlow/releases/latest/download/CleanFlow.AppImage): always the latest release, not code-signed/notarized (Gatekeeper/SmartScreen will warn on first run). Or build from source, see Getting Started below.
+
+---
+
 **In practice:** you scan a folder, review a generated plan of moves, trashes and tags, and execute only what you select; every executed action can be undone from the journal. AI (Claude or a local Ollama model) only assists with classification and suggestions; the underlying scan, rule matching, and undo logic works without it.
 
 ---
