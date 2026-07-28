@@ -16,7 +16,7 @@ tracing    = { workspace = true }
 
 walkdir    = "2"
 rayon      = "1"
-sha2       = "0.10"
+sha2       = "0.11"
 hex        = "0.4"
 infer      = "0.16"
 regex      = "1"
