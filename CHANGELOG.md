@@ -6,6 +6,17 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.0.2] - 2026-07-28
+
+### Added
+
+- `.github/dependabot.yml`, covering GitHub Actions, the Cargo workspace and the frontend npm packages, with grouped weekly updates. The file was missing, and without it there are no version updates at all: security alerts only fire for disclosed vulnerabilities. Follows `engineering-standards` v0.10.0.
+
+### Fixed
+
+- The repository carried five different version numbers: 0.1.3 in both crates, 1.0.0 in `src-tauri`, 0.2.8 in `frontend/package.json`, and 1.0.1 in `tauri.conf.json`, which was the tagged one. A `[workspace.package]` section now holds a single version that the crates inherit, matching the four sibling Tauri repositories, and the frontend and Tauri config agree with it.
+- `actions/checkout` was pinned to two different SHAs across the three workflows. All now use v7.0.1 with the full version in the comment, per `engineering-standards` `standards/ci-cd.md` section 2.
+
 ## [1.0.1] - 2026-07-20
 
 ### Changed
