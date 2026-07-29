@@ -21,7 +21,7 @@ tracing    = { workspace = true }
 uuid       = { workspace = true }
 thiserror  = { workspace = true }
 reqwest    = { workspace = true }
-keyring    = "3"
+keyring    = "4"
 
 tauri            = { version = "2", features = [] }
 tauri-plugin-shell       = "2"
