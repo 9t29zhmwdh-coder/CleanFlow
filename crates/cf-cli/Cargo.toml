@@ -13,4 +13,4 @@ tokio      = { workspace = true }
 serde_json = { workspace = true }
 anyhow     = { workspace = true }
 clap       = { version = "4", features = ["derive", "color"] }
-keyring    = "3"
+keyring    = "4"
