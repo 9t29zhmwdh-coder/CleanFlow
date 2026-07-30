@@ -30,7 +30,9 @@ const SECRET: &str = "correct horse battery staple";
 #[test]
 fn a_stored_secret_survives_the_writing_process() {
     if let Ok(account) = std::env::var(CHILD_ENV) {
-        let entry = keyring::Entry::new(SERVICE, &account).expect("entry");
+        let Ok(entry) = keyring::Entry::new(SERVICE, &account) else {
+            std::process::exit(3);
+        };
         match entry.get_password() {
             Ok(v) if v == SECRET => std::process::exit(0),
             Ok(_) => std::process::exit(2),
@@ -39,7 +41,18 @@ fn a_stored_secret_survives_the_writing_process() {
     }
 
     let account = format!("probe-{}", std::process::id());
-    let entry = keyring::Entry::new(SERVICE, &account).expect("entry");
+
+    // Where the connection to the store is made differs by version: keyring 3
+    // opens it on the first write, keyring 4 already on Entry::new. Either
+    // failure means a real backend is compiled in and only its service is
+    // missing, so both are treated the same way.
+    let entry = match keyring::Entry::new(SERVICE, &account) {
+        Ok(e) => e,
+        Err(e) => {
+            println!("backend present, service unavailable, persistence not exercised: {e}");
+            return;
+        }
+    };
 
     if let Err(e) = entry.set_password(SECRET) {
         // The in-memory fallback never fails to write, so an error here proves a

@@ -552,7 +552,7 @@ checksum = "6d43a04d8753f35258c91f8ec639f792891f748a1edbd759cf1dcea3382ad83c"
 
 [[package]]
 name = "cf-cli"
-version = "1.0.8"
+version = "1.0.9"
 dependencies = [
  "anyhow",
  "cf-core",
@@ -564,7 +564,7 @@ dependencies = [
 
 [[package]]
 name = "cf-core"
-version = "1.0.8"
+version = "1.0.9"
 dependencies = [
  "anyhow",
  "chrono",
@@ -709,7 +709,7 @@ checksum = "c8d4a3bb8b1e0c1050499d1815f5ab16d04f0959b233085fb31653fbfc9d98f9"
 
 [[package]]
 name = "cleanflow-app"
-version = "1.0.8"
+version = "1.0.9"
 dependencies = [
  "anyhow",
  "cf-core",

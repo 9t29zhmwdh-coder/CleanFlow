@@ -11,7 +11,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 ### Added
 
 - `Cargo.lock` is committed. It was listed in `.gitignore`, so every build resolved dependencies afresh and no two builds were guaranteed to use the same versions. For an application rather than a library the lock file belongs in the repository: it is what makes a release reproducible and what lets a security advisory be checked against what actually shipped.
-- A test that stores a secret and reads it back from a second process. `keyring` 4 refuses to build without a backend, so the silent variant of this defect cannot occur here, but the test still confirms the store actually works rather than merely compiling.
+- A test that stores a secret and reads it back from a second process. `keyring` 4 refuses to build without a backend, so the silent variant of this defect cannot occur here, but the test still confirms the store actually works rather than merely compiling. Where the connection to the store is made differs by version: keyring 3 opens it on the first write, keyring 4 already on `Entry::new`. The test treats either failure as a missing service rather than a missing backend, which is what a Linux CI runner without a D-Bus secret service looks like.
 
 ---
 
