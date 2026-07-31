@@ -34,12 +34,15 @@ pub async fn check_ai_backend(state: State<'_, AppState>) -> Result<AiBackendSta
         .map(|r| r.status().is_success())
         .unwrap_or(false);
 
-    let active_backend = if claude_available {
-        AiBackend::Claude
-    } else if ollama_available {
-        AiBackend::Ollama
-    } else {
-        AiBackend::RuleBasedOnly
+    // Die Einstellung entscheidet, nicht das blosse Vorhandensein eines
+    // Schluessels. Vorher hat ein einmal hinterlegter Claude-Key jede andere
+    // Wahl ueberstimmt, und wer lokal arbeiten wollte, musste ihn loeschen.
+    let active_backend = match settings.ai_backend {
+        AiBackend::Claude if claude_available => AiBackend::Claude,
+        AiBackend::Ollama if ollama_available => AiBackend::Ollama,
+        // Gewaehlt, aber nicht erreichbar: der Scan laeuft regelbasiert weiter,
+        // und die Oberflaeche soll genau das anzeigen.
+        _ => AiBackend::RuleBasedOnly,
     };
 
     Ok(AiBackendStatus {
@@ -90,7 +93,7 @@ pub fn has_api_key(service: String) -> bool {
         .unwrap_or(false)
 }
 
-fn load_api_key(service: &str) -> String {
+pub(crate) fn load_api_key(service: &str) -> String {
     keyring::Entry::new("cleanflow", service)
         .and_then(|e| e.get_password())
         .unwrap_or_default()
