@@ -49,7 +49,7 @@ Nothing is executed until you select it, and the AI only suggests.
 | Feature | Description |
 |---|---|
 | **File Analysis** | MIME detection, SHA-256 deduplication, series grouping |
-| **AI Classification** | Claude or a local Ollama model classifies invoices, contracts, screenshots, code, etc. |
+| **AI Classification** | Optional, off by default. Claude or a local Ollama model classifies invoices, contracts, screenshots, code, etc. from file metadata (name, size, type), never from file contents |
 | **Clean-Up Engine** | Detects DMGs, .DS_Store, temp files, zombie files, old versions |
 | **Rule Engine** | Built-in + custom rules (e.g. "PDF + invoice → Documents/Finance/2026") |
 | **Action Preview** | Review every proposed action before executing |

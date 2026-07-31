@@ -19,9 +19,11 @@ Response within 7 days.
 
 ## Security Design
 
-- **Sorting is rule-based and involves no model at all.** The AI classifiers under `crates/cf-core/src/ai/` are not reached from the application; nothing instantiates them. Sorting, duplicate detection and the action journal run entirely on your machine
-- The only outbound request is a two-second reachability check against your Ollama URL, `localhost:11434` by default, so the settings screen can report whether a backend is available. No file names or contents are sent with it
-- No file contents leave the machine under any setting
+- **The AI backend setting decides what leaves the machine, and it is off by default.** A fresh installation runs `RuleBasedOnly`: sorting, duplicate detection and the action journal work entirely on your machine and no classification request is made at all
+- Selecting Ollama sends file metadata to your own instance, `localhost:11434` unless you change it. Nothing leaves the device
+- Selecting Claude sends file metadata to `api.anthropic.com` using your own API key. **What that means concretely: the file name, its size and its MIME type, for every scanned file.** File names are frequently the sensitive part, more so than the contents, and a folder listing can say a great deal about you
+- **No file contents are read or transmitted under any setting.** The classifier works from metadata only
+- The settings screen also performs a two-second reachability check against your Ollama URL so it can report whether a backend is available. No file data is sent with it
 - All Tauri IPC commands explicitly allowlisted
 - No third-party analytics SDKs
 

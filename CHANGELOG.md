@@ -6,6 +6,24 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.1.0] - 2026-07-31
+
+### Fixed
+
+- **AI classification has never run.** `ROADMAP.md` lists it under v0.1.0 as shipped and the README advertises it in the feature table, but nothing in the application ever instantiated a classifier. Everything around it was built: `ScannedFile.ai_classification` exists, `planner.rs` and the rule engine read it in four places, `ScanPhase::AiClassifying` exists, the frontend types include it, and both a Claude and an Ollama classifier are fully implemented. The single call that fills the field was missing. It is there now, batching 50 files per request and reporting progress through the phase and counter the UI was already prepared for.
+- The active backend now follows the setting instead of the presence of an API key. A Claude key stored once overrode every other choice, so anyone wanting to work locally had to delete it.
+
+### Changed
+
+- **A fresh installation classifies nothing.** The default backend is `RuleBasedOnly`. Since the feature never ran, nobody has been relying on it, and switching it on silently would have sent file names to Anthropic for every user who had once stored a key. Turning it on is a deliberate choice in settings.
+- `AppSettings` gains `ollama_model`, defaulting to `llama3.2`. It carries a serde default so settings saved by earlier versions still load; without it, deserialisation would fail and the app would quietly fall back to factory settings, losing the user's scan paths and thresholds.
+
+### Security
+
+- `SECURITY.md` now states what the Claude backend transmits: the name, size and MIME type of every scanned file. File names are often the sensitive part, more so than contents, and a folder listing says a great deal about a person. No file contents are read or transmitted under any setting.
+
+---
+
 ## [1.0.11] - 2026-07-31
 
 ### Fixed

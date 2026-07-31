@@ -50,7 +50,7 @@ Nichts wird ausgeführt, bevor du es auswählst, und die KI schlägt nur vor.
 | Funktion | Beschreibung |
 |---|---|
 | **Datei-Analyse** | MIME-Erkennung, SHA-256-Duplikate, Serien-Gruppen |
-| **KI-Klassifizierung** | Claude oder ein lokales Ollama-Modell erkennt Rechnungen, Verträge, Screenshots, Code |
+| **KI-Klassifizierung** | Optional, standardmässig aus. Claude oder ein lokales Ollama-Modell erkennt Rechnungen, Verträge, Screenshots, Code und Ähnliches anhand der Dateimetadaten (Name, Grösse, Typ), nie anhand der Dateiinhalte |
 | **Clean-Up-Engine** | DMGs, .DS_Store, Temp-Dateien, Zombie-Dateien, alte Versionen |
 | **Regelwerk** | Eingebaute + benutzerdefinierte Regeln |
 | **Aktionsvorschau** | Jede Aktion vor der Ausführung überprüfen |

@@ -318,16 +318,31 @@ pub enum UndoData {
 pub struct AppSettings {
     pub ai_backend: AiBackend,
     pub ollama_url: String,
+    /// Neu in 1.1.0. Der Default greift auch fuer bereits gespeicherte
+    /// Einstellungen, die dieses Feld nicht enthalten; ohne ihn wuerde deren
+    /// Deserialisierung fehlschlagen und der Nutzer saehe stillschweigend
+    /// wieder Werkseinstellungen.
+    #[serde(default = "default_ollama_model")]
+    pub ollama_model: String,
     pub max_file_size_for_ai: u64,
     pub zombie_threshold_days: u32,
     pub auto_scan_paths: Vec<PathBuf>,
 }
 
+fn default_ollama_model() -> String {
+    "llama3.2".to_string()
+}
+
 impl Default for AppSettings {
     fn default() -> Self {
         Self {
-            ai_backend: AiBackend::Claude,
+            // Bewusst RuleBasedOnly. Die Klassifizierung war bis 1.1.0 nie
+            // angebunden, also hat faktisch niemand sie je benutzt. Sie
+            // stillschweigend einzuschalten wuerde bei Claude Dateinamen an
+            // Anthropic schicken, ohne dass jemand darum gebeten hat.
+            ai_backend: AiBackend::RuleBasedOnly,
             ollama_url: "http://localhost:11434".into(),
+            ollama_model: default_ollama_model(),
             max_file_size_for_ai: 1024 * 1024,
             zombie_threshold_days: 90,
             auto_scan_paths: vec![],
@@ -347,4 +362,38 @@ pub struct AiBackendStatus {
     pub claude_available: bool,
     pub ollama_available: bool,
     pub active_backend: AiBackend,
+}
+
+#[cfg(test)]
+mod settings_tests {
+    use super::*;
+
+    #[test]
+    fn settings_saved_before_1_1_0_still_load() {
+        // Diese Form lag vor dem Hinzufuegen von ollama_model auf der Platte.
+        // Ohne serde-Default schluege die Deserialisierung fehl, und der
+        // Nutzer saehe wortlos wieder Werkseinstellungen: seine Scan-Pfade,
+        // sein Zombie-Schwellwert, alles weg.
+        let stored = r#"{
+            "ai_backend": "Ollama",
+            "ollama_url": "http://nas.local:11434",
+            "max_file_size_for_ai": 2048,
+            "zombie_threshold_days": 30,
+            "auto_scan_paths": []
+        }"#;
+
+        let s: AppSettings = serde_json::from_str(stored).expect("alte Einstellungen muessen laden");
+        assert_eq!(s.ai_backend, AiBackend::Ollama);
+        assert_eq!(s.ollama_url, "http://nas.local:11434");
+        assert_eq!(s.zombie_threshold_days, 30);
+        assert_eq!(s.ollama_model, "llama3.2", "das neue Feld faellt auf den Default zurueck");
+    }
+
+    #[test]
+    fn a_fresh_installation_does_not_classify_at_all() {
+        // Die Klassifizierung war bis 1.1.0 nie angebunden. Sie beim
+        // Anbinden stillschweigend einzuschalten wuerde bei Claude
+        // Dateinamen an Anthropic schicken, ohne dass jemand zugestimmt hat.
+        assert_eq!(AppSettings::default().ai_backend, AiBackend::RuleBasedOnly);
+    }
 }
