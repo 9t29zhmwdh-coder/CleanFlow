@@ -6,6 +6,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.1.1] - 2026-07-31
+
+### Fixed
+
+- CI checked only macOS while the release builds for macOS, Linux and Windows. The AppImage and the Windows installer went out without ever having been compile-checked, so a fault appearing only on those platforms would have surfaced in a user's download rather than in a pull request. `check` now runs as a matrix over all three, matching what LogLens and BugRadar already do. The Linux runner installs the same GTK and WebKit packages the release workflow installs, since Tauri does not build without them.
+- The very first matrix run earned its keep: `cargo clippy -D warnings` failed on Linux at `open_in_finder`, a needless borrow inside the `#[cfg(target_os = "linux")]` branch. That code had never been linted, because the branch is compiled out on macOS and macOS was the only runner. Fixed in the same change.
+- The `solo-main-protection` ruleset now requires `Check (ubuntu-latest)`, `(macos-latest)` and `(windows-latest)` instead of the old single `Check`. Renaming a job without moving the required context leaves every future pull request permanently unmergeable while looking green, which is exactly what stalled a Dependabot pull request in BugRadar for three days.
+
+---
+
 ## [1.1.0] - 2026-07-31
 
 ### Fixed
