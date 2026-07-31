@@ -6,6 +6,19 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.0.11] - 2026-07-31
+
+### Fixed
+
+- `SECURITY.md` described a network profile the application does not have. It named Ollama as the exception to "no external network calls", which suggests file names or contents are sent to a model. They are not: sorting is rule-based, the AI classifiers under `crates/cf-core/src/ai/` are never instantiated from the application, and the only outbound request is a two-second reachability check so the settings screen can report whether a backend is available. The file now says that.
+- The supported-versions table still listed `0.1.x`, a line that no longer exists.
+
+### Added
+
+- `SECURITY.md` records GHSA-wrw7-89jp-8q8g against `glib` 0.18.5, which cannot be fixed from this repository because Tauri 2.11.5 pins `gtk ^0.18` and no patched 0.18.x exists.
+
+---
+
 ## [1.0.10] - 2026-07-30
 
 ### Changed
