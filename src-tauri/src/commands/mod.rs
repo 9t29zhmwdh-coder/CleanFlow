@@ -71,7 +71,7 @@ pub fn open_in_finder(path: String) -> Result<()> {
     #[cfg(target_os = "linux")]
     {
         std::process::Command::new("xdg-open")
-            .arg(&std::path::Path::new(&path).parent().unwrap_or_else(|| std::path::Path::new("/")))
+            .arg(std::path::Path::new(&path).parent().unwrap_or_else(|| std::path::Path::new("/")))
             .spawn()
             .map_err(|e| crate::error::CfError::Io(e.to_string()))?;
     }
