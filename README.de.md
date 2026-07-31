@@ -6,9 +6,22 @@
 
 [🇬🇧 English Version](README.md)
 
-**KI-gestützter Datei-Organizer für macOS, Windows und Linux, entwickelt mit Rust und Tauri.**
+**Zeigt dir den ganzen Aufräumlauf, bevor er etwas anfasst, und merkt sich, was er getan hat.**
 
-CleanFlow durchsucht Downloads, Desktop, Dokumente oder beliebige Verzeichnisse, klassifiziert Dateien per KI, erkennt Duplikate, findet Junk-Dateien und erstellt einen übersichtlichen Aktionsplan. Ein Klick zum Ausführen; mit vollständigem Undo-System.
+Zeig auf Downloads oder Desktop. CleanFlow wendet seine Regeln an, findet
+Duplikate und Junk und legt dir einen Plan vor: jede Verschiebung, jede
+Löschung, jeder Tag, aufgelistet. Du hakst ab, was passieren soll. Jede
+ausgeführte Aktion landet im Journal und lässt sich später zurückdrehen.
+
+**Nichts für dich, wenn** die Dateinamen nichts verraten und du etwas brauchst,
+das in die Dateien hineinschaut, auch in Fotos. Das ist eine andere Aufgabe, und
+[LifeSort](https://github.com/9t29zhmwdh-coder/LifeSort) ist die in diesem
+Portfolio: es liest Dokumente und lässt ein Vision-Modell über Bilder laufen,
+um nach Inhalt zu sortieren. CleanFlow arbeitet nach Regeln, das ist schneller
+und vorhersehbar, aber eine Regel kann dir nicht sagen, was in `IMG_4471.jpg`
+steckt.
+
+Nichts wird ausgeführt, bevor du es auswählst, und die KI schlägt nur vor.
 
 [![CI](https://github.com/9t29zhmwdh-coder/CleanFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/CleanFlow/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/CleanFlow/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/CleanFlow/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/CleanFlow/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/CleanFlow) [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/13714/badge)](https://www.bestpractices.dev/projects/13714)
 
