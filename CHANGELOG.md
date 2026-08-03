@@ -6,6 +6,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.3.0] - 2026-08-04
+
+### Changed
+
+- `lucide-react` 0.511 to 1.28, the first stable major. All eleven icons this frontend imports were checked against the package under both versions and all eleven are present in both.
+- The npm group, covering transitive packages below vite; `postcss` lands at 8.5.25.
+- `github/codeql-action` 4.37.3 to 4.37.4 and `actions/attest` 4.2.0 to 4.2.1, merged separately and carried by this version.
+
+---
+
 ## [1.2.0] - 2026-08-03
 
 ### Changed
