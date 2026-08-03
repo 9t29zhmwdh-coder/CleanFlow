@@ -34,7 +34,7 @@ export function ScanView() {
           value={path}
           onChange={(e) => setPath(e.target.value)}
           placeholder={t("pathPlaceholder")}
-          className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm focus:outline-hidden focus:ring-2 focus:ring-brand-500"
         />
         <button
           onClick={pickFolder}
