@@ -70,7 +70,7 @@ export function ActionPreview() {
       <button
         onClick={handleCleanflow}
         disabled={isLoading}
-        className="flex items-center justify-center gap-2 rounded-xl bg-brand-600 py-3 text-base font-semibold text-white shadow-sm hover:bg-brand-700 disabled:opacity-50"
+        className="flex items-center justify-center gap-2 rounded-xl bg-brand-600 py-3 text-base font-semibold text-white shadow-xs hover:bg-brand-700 disabled:opacity-50"
       >
         <Play size={18} />
         {t("cleanflowExecuteAll")} ({plan.actions.filter(a => a.selected).length})

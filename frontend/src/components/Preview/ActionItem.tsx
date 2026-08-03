@@ -25,7 +25,7 @@ export function ActionItem({ action, selected, onToggle }: Props) {
     >
       {/* Checkbox */}
       <div className={clsx(
-        "h-4 w-4 shrink-0 rounded border-2",
+        "h-4 w-4 shrink-0 rounded-sm border-2",
         selected ? "border-brand-500 bg-brand-500" : "border-gray-300"
       )} />
 
@@ -79,7 +79,7 @@ function ActionDescription({ action }: { action: PlannedAction["action"] }) {
       return (
         <span>
           {t("tagPrefix")} {action.tags.map(tag => (
-            <span key={tag} className="ml-1 rounded bg-gray-100 px-1.5 py-0.5 text-xs">{tag}</span>
+            <span key={tag} className="ml-1 rounded-sm bg-gray-100 px-1.5 py-0.5 text-xs">{tag}</span>
           ))}
         </span>
       );
@@ -98,7 +98,7 @@ function ReasonBadge({ reason }: { reason: PlannedAction["reason"] }) {
   };
   return (
     <span className={clsx(
-      "shrink-0 rounded px-2 py-0.5 text-xs font-medium",
+      "shrink-0 rounded-sm px-2 py-0.5 text-xs font-medium",
       colorMap[reason.type] ?? "bg-gray-100 text-gray-600"
     )}>
       {reasonLabel(reason as any)}
