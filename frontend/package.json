@@ -15,7 +15,7 @@
     "@tauri-apps/plugin-notification": "^2",
     "@tauri-apps/plugin-shell": "^2",
     "clsx": "^2",
-    "lucide-react": "^0.511",
+    "lucide-react": "^1.28",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "zustand": "^5"
