@@ -6,6 +6,17 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.2.0] - 2026-08-03
+
+### Changed
+
+- React 18 to 19, together with `react-dom` and both type packages. Dependabot had split these and neither half merges alone, because `@types/react-dom` 18 requires `@types/react` 18. No code change was needed, checked against the list of things React 19 removes rather than assumed.
+- Vite 6 to 8 and @vitejs/plugin-react 4 to 6. Vite 8 replaces Rollup with Rolldown. The config needed no change, and it does not name a minifier, which is what broke this same step in ClarityDesk since Vite 8 no longer ships esbuild.
+- Tailwind CSS 3 to 4. The config file is gone, the stylesheet imports tailwindcss directly, and PostCSS uses `@tailwindcss/postcss`. autoprefixer is no longer a dependency because version 4 prefixes on its own.
+- Two utility names were rewritten across three components: `rounded` to `rounded-sm` three times, `outline-none` to `outline-hidden` once. Only the second changes behaviour. Measured under 4.3.3, `rounded` is still 0.25rem and kept as an alias.
+
+---
+
 ## [1.1.2] - 2026-08-01
 
 ### Changed
