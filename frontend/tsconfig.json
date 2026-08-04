@@ -9,9 +9,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] }
+    "jsx": "react-jsx"
   },
   "include": ["src"]
 }
