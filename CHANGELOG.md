@@ -6,6 +6,18 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.3.1] - 2026-08-04
+
+### Changed
+
+- TypeScript 5.9.3 to 7. No source change was needed, but the configuration did: version 7 removed `baseUrl` and rejects non-relative `paths`.
+
+### Removed
+
+- The `@/*` to `src/*` path mapping. It could have been rewritten in the form version 7 wants, but no source file imports through `@/` and `vite.config.ts` never carried a matching alias, so the mapping had been decoration since it was written.
+
+---
+
 ## [1.3.0] - 2026-08-04
 
 ### Changed
