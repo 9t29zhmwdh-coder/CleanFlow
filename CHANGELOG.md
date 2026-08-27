@@ -6,6 +6,24 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.3.3] - 2026-08-27
+
+### Changed
+
+- **Eigenes App-Icon.** Bis hierher trug jedes Werkzeug des Portfolios dasselbe RayStudio-Logo, byteweise identisch, was im Dock und in der Titelleiste nicht auseinanderzuhalten war. CleanFlow bekommt jetzt sein eigenes Zeichen im bestehenden Hausstil: runder Rahmen mit Goldkante, tiefdunkler Grund, die Initialen in einer Didone-Serife, der goldene Strahl mit Funkeln darueber.
+
+  Zwei Fassungen, wie es Apple und Microsoft ebenfalls halten: ab 128 Punkten die feine mit dem Schriftzug, darunter eine ohne. Gesperrte Versalien werden bei 32 Punkten zu einem grauen Streifen und nehmen den Initialen nur den Platz weg, den sie dort brauchen.
+
+  Die Farbwerte stammen aus `RegistrarCheck.png`, nicht aus einer Schaetzung: Grund `#010d22`, Gold von `#a7782f` ueber `#e2c47e` nach `#ca9f4d`. Die SVG-Quellen liegen unter `src-tauri/icons/source/`, damit sich das Zeichen spaeter aendern laesst, ohne es nachbauen zu muessen.
+
+### Security
+
+- `h2` 0.4.15 auf 0.4.19, schliesst RUSTSEC-2026-0258, unbegrenzte leere DATA-Frames. Die Meldung erschien am 2026-08-17, nach dem letzten Durchlauf dieses Projekts, und fiel deshalb beim naechsten Build auf, nicht durch eine Aenderung hier. `h2` kommt ueber `reqwest` und `hyper` herein; gehoben wurde gezielt nur dieses eine Paket.
+
+- Nebenbei zieht `Cargo.lock` die Versionen der eigenen Crates nach. Sie standen dort noch auf einem aelteren Stand als in `Cargo.toml`, waren also seit mehreren Releases nicht mehr synchron.
+
+---
+
 ## [1.3.2] - 2026-08-05
 
 ### Added
