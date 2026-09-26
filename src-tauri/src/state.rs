@@ -19,7 +19,6 @@ pub struct AppState {
     pub store: Arc<Store>,
     pub journal: Arc<Journal>,
     pub scans: Mutex<HashMap<String, ScanSession>>,
-    pub data_dir: PathBuf,
 }
 
 impl AppState {
@@ -31,7 +30,6 @@ impl AppState {
             store: Arc::new(store),
             journal: Arc::new(journal),
             scans: Mutex::new(HashMap::new()),
-            data_dir,
         })
     }
 }
