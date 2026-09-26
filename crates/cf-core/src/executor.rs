@@ -145,8 +145,13 @@ fn undo_action(action: &Action, undo_data: &UndoData) -> anyhow::Result<()> {
             std::fs::rename(current_path, original_path)?;
         }
         UndoData::FileWasTrashed { original_path } => {
-            // Restore from trash not universally possible: warn
-            tracing::warn!("Cannot restore from trash: {:?}", original_path);
+            // The system trash gives no way back to the exact item it stored,
+            // so report it instead of counting it as undone. On macOS the file
+            // was trashed through Finder, which keeps "Put Back" available.
+            anyhow::bail!(
+                "{} is in the Trash; restore it there with Put Back",
+                original_path.display()
+            );
         }
         UndoData::FileWasRenamed { original_name } => {
             let current_path = match action {

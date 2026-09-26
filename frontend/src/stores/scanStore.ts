@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { OrganizePlan, ScannedFile, ScanStatus } from "../lib/tauri";
+import type { ExecutionResult, OrganizePlan, ScannedFile, ScanStatus, UndoResult } from "../lib/tauri";
 import { api, listenScanStatus } from "../lib/tauri";
 
 interface ScanStore {
@@ -9,11 +9,16 @@ interface ScanStore {
   plan: OrganizePlan | null;
   isLoading: boolean;
   error: string | null;
+  // Redundant copies found in the finished scan (files minus one per group).
+  duplicateCount: number;
+  lastResult: ExecutionResult | null;
+  undoResult: UndoResult | null;
 
   startScan: (path: string) => Promise<void>;
   loadPlan: () => Promise<void>;
   executePlan: (selectedIds?: string[]) => Promise<void>;
   executeCleanflow: () => Promise<void>;
+  undoLast: () => Promise<void>;
   reset: () => void;
 }
 
@@ -24,38 +29,50 @@ export const useScanStore = create<ScanStore>((set, get) => ({
   plan: null,
   isLoading: false,
   error: null,
+  duplicateCount: 0,
+  lastResult: null,
+  undoResult: null,
 
   startScan: async (path) => {
-    set({ isLoading: true, error: null, files: [], plan: null });
+    set({ isLoading: true, error: null, files: [], plan: null, duplicateCount: 0, lastResult: null, undoResult: null });
     try {
       const scanId = await api.scanDirectory(path);
       set({ scanId });
 
       let settled = false;
+      // The Done event can arrive while listenScanStatus is still registering,
+      // so handleStatus must not touch the unlisten function before it exists.
+      let unlisten: (() => void) | null = null;
+      const stopListening = () => unlisten?.();
       const handleStatus = async (status: ScanStatus) => {
         if (settled) return;
         set({ status });
         if (status.phase === "Done") {
           settled = true;
-          unlisten();
+          stopListening();
           try {
             const files = await api.getScannedFiles(scanId);
-            set({ files, isLoading: false });
+            // Duplicates are only hashed on request; without this the scan
+            // summary always showed 0 even when the plan then found some.
+            const groups = await api.findDuplicates(scanId);
+            const duplicateCount = groups.reduce((n, g) => n + g.files.length - 1, 0);
+            set({ files, duplicateCount, isLoading: false });
           } catch (e) {
             set({ isLoading: false, error: String(e) });
           }
         } else if (status.phase === "Cancelled") {
           settled = true;
-          unlisten();
+          stopListening();
           set({ isLoading: false });
         } else if (typeof status.phase === "object" && "Error" in status.phase) {
           settled = true;
-          unlisten();
+          stopListening();
           set({ isLoading: false, error: status.phase.Error });
         }
       };
 
-      const unlisten = await listenScanStatus(scanId, handleStatus);
+      unlisten = await listenScanStatus(scanId, handleStatus);
+      if (settled) stopListening();
 
       // The scan may already have finished (very small directories) before the
       // listener above was attached; poll once to catch a missed Done event.
@@ -82,8 +99,8 @@ export const useScanStore = create<ScanStore>((set, get) => ({
     if (!plan) return;
     set({ isLoading: true });
     try {
-      await api.executePlan(plan.id, selectedIds);
-      set({ isLoading: false, plan: null });
+      const lastResult = await api.executePlan(plan.id, selectedIds);
+      set({ isLoading: false, plan: null, files: [], lastResult, undoResult: null });
     } catch (e) {
       set({ isLoading: false, error: String(e) });
     }
@@ -94,12 +111,22 @@ export const useScanStore = create<ScanStore>((set, get) => ({
     if (!scanId) return;
     set({ isLoading: true });
     try {
-      await api.executeCleanflow(scanId);
-      set({ isLoading: false, plan: null });
+      const lastResult = await api.executeCleanflow(scanId);
+      set({ isLoading: false, plan: null, files: [], lastResult, undoResult: null });
     } catch (e) {
       set({ isLoading: false, error: String(e) });
     }
   },
 
-  reset: () => set({ scanId: null, status: null, files: [], plan: null, error: null }),
+  undoLast: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const undoResult = await api.undoLast();
+      set({ isLoading: false, lastResult: null, undoResult });
+    } catch (e) {
+      set({ isLoading: false, error: String(e) });
+    }
+  },
+
+  reset: () => set({ scanId: null, status: null, files: [], plan: null, error: null, duplicateCount: 0, lastResult: null, undoResult: null }),
 }));

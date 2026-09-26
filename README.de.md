@@ -11,7 +11,9 @@
 Zeig auf Downloads oder Desktop. CleanFlow wendet seine Regeln an, findet
 Duplikate und Junk und legt dir einen Plan vor: jede Verschiebung, jede
 Löschung, jeder Tag, aufgelistet. Du hakst ab, was passieren soll. Jede
-ausgeführte Aktion landet im Journal und lässt sich später zurückdrehen.
+ausgeführte Aktion landet im Journal: Verschiebungen und Umbenennungen lassen
+sich in der App zurückdrehen, Dateien im Papierkorb holt Finder mit
+"Zurücklegen" zurück.
 
 **Nichts für dich, wenn** die Dateinamen nichts verraten und du etwas brauchst,
 das in die Dateien hineinschaut, auch in Fotos. Das ist eine andere Aufgabe, und
@@ -37,7 +39,7 @@ Nichts wird ausgeführt, bevor du es auswählst, und die KI schlägt nur vor.
 
 ---
 
-**In der Praxis:** du scannst einen Ordner, prüfst einen erstellten Plan aus Verschiebungen, Papierkorb-Aktionen und Tags, und führst nur aus, was du auswählst; jede ausgeführte Aktion kann über das Journal rückgängig gemacht werden. KI (Claude oder ein lokales Ollama-Modell) unterstützt nur bei Klassifizierung und Vorschlägen; die zugrunde liegende Scan-, Regel- und Undo-Logik funktioniert auch ohne sie.
+**In der Praxis:** du scannst einen Ordner, prüfst einen erstellten Plan aus Verschiebungen, Papierkorb-Aktionen und Tags, und führst nur aus, was du auswählst; jeder Lauf landet im Journal, Verschiebungen und Umbenennungen lassen sich daraus rückgängig machen, Dateien im Papierkorb holt Finder mit "Zurücklegen" zurück. KI (Claude oder ein lokales Ollama-Modell) unterstützt nur bei Klassifizierung und Vorschlägen; die zugrunde liegende Scan-, Regel- und Undo-Logik funktioniert auch ohne sie.
 
 ---
 
@@ -55,7 +57,7 @@ Nichts wird ausgeführt, bevor du es auswählst, und die KI schlägt nur vor.
 | **Regelwerk** | Eingebaute + benutzerdefinierte Regeln |
 | **Aktionsvorschau** | Jede Aktion vor der Ausführung überprüfen |
 | **Ein-Klick CleanFlow** | Alle gewählten Aktionen in einem Klick ausführen |
-| **Undo-System** | Journal-basiertes Rückgängigmachen jeder Aktion |
+| **Rückgängig** | Jeder Lauf steht auf der Startseite; Verschiebungen und Umbenennungen werden zurückgedreht, Dateien im Papierkorb werden genannt, damit du sie dort zurücklegen kannst |
 | **CLI-Modus** | `cleanflow scan`, `cleanflow organize`, `cleanflow undo` |
 
 ---

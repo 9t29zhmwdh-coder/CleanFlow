@@ -90,6 +90,18 @@ export interface ExecutionResult {
   errors: string[];
 }
 
+export interface UndoResult {
+  undone_count: number;
+  errors: string[];
+}
+
+export interface HistoryEntry {
+  id: string;
+  executed_at: number;
+  plan_id: string;
+  actions: unknown[];
+}
+
 export interface DuplicateGroup {
   group_id: string;
   files: ScannedFile[];
@@ -145,9 +157,11 @@ export const api = {
 
   // Undo
   listHistory: (limit = 20) =>
-    invoke<object[]>("list_history", { limit }),
+    invoke<HistoryEntry[]>("list_history", { limit }),
   undoLast: () =>
-    invoke<object>("undo_last"),
+    invoke<UndoResult>("undo_last"),
+  undoById: (historyId: string) =>
+    invoke<UndoResult>("undo_by_id", { historyId }),
 
   // System
   getSettings: () => invoke<AppSettings>("get_settings"),

@@ -4,7 +4,14 @@ export type Lang = 'en' | 'de'
 
 const STORAGE_KEY = 'cleanflow_lang'
 
-let currentLang: Lang = (localStorage.getItem(STORAGE_KEY) as Lang) || 'en'
+// An explicit choice wins; otherwise follow the system language.
+function initialLang(): Lang {
+  const stored = localStorage.getItem(STORAGE_KEY)
+  if (stored === 'en' || stored === 'de') return stored
+  return navigator.language.toLowerCase().startsWith('de') ? 'de' : 'en'
+}
+
+let currentLang: Lang = initialLang()
 
 export function getLang(): Lang {
   return currentLang
@@ -47,6 +54,10 @@ const translations = {
     statActions: 'Actions', statFreed: 'Freed', statAi: 'AI',
     cleanflowExecuteAll: 'CleanFlow: Execute All',
     selectedCount: '{{n}} / {{total}} selected', executeSelected: 'Execute selected',
+    executedSummary: '{{n}} actions executed, {{errors}} errors', undo: 'Undo',
+    undoneSummary: '{{n}} actions undone, {{errors}} could not be undone',
+    historyTitle: 'Recent runs', historyEmpty: 'Nothing executed yet.',
+    historyEntry: '{{n}} actions', trashNote: 'Files moved to the Trash can be restored there with Put Back.',
 
     reasonRule: 'Rule: {{name}}', reasonAi: 'AI: {{explanation}}',
     reasonDuplicate: 'Duplicate', reasonJunk: 'Junk: {{type}}', reasonOldVersion: 'Old version',
@@ -71,6 +82,10 @@ const translations = {
     statActions: 'Aktionen', statFreed: 'Freigegeben', statAi: 'KI',
     cleanflowExecuteAll: 'CleanFlow: Alles ausführen',
     selectedCount: '{{n}} / {{total}} ausgewählt', executeSelected: 'Auswahl ausführen',
+    executedSummary: '{{n}} Aktionen ausgeführt, {{errors}} Fehler', undo: 'Rückgängig',
+    undoneSummary: '{{n}} Aktionen rückgängig gemacht, {{errors}} nicht möglich',
+    historyTitle: 'Letzte Läufe', historyEmpty: 'Noch nichts ausgeführt.',
+    historyEntry: '{{n}} Aktionen', trashNote: 'In den Papierkorb verschobene Dateien lassen sich dort mit "Zurücklegen" wiederherstellen.',
 
     reasonRule: 'Regel: {{name}}', reasonAi: 'KI: {{explanation}}',
     reasonDuplicate: 'Duplikat', reasonJunk: 'Müll: {{type}}', reasonOldVersion: 'Alte Version',

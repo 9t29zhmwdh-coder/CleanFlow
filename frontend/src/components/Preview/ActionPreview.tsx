@@ -31,15 +31,10 @@ export function ActionPreview() {
     }
   };
 
-  const handleExecute = async () => {
-    await executePlan(Array.from(selected));
-    reset();
-  };
-
-  const handleCleanflow = async () => {
-    await executeCleanflow();
-    reset();
-  };
+  // The store keeps the result so the scan view can show it and offer undo;
+  // resetting here used to throw away both the result and any error.
+  const handleExecute = () => executePlan(Array.from(selected));
+  const handleCleanflow = () => executeCleanflow();
 
   return (
     <div className="flex flex-col gap-4 p-6">
