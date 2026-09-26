@@ -7,7 +7,7 @@ import { useT } from "../../lib/i18n";
 
 export function ScanView() {
   const [path, setPath] = useState("");
-  const { status, files, isLoading, error, startScan, loadPlan } = useScanStore();
+  const { status, files, isLoading, error, startScan, loadPlan, duplicateCount } = useScanStore();
   const t = useT();
 
   const pickFolder = async () => {
@@ -53,6 +53,8 @@ export function ScanView() {
         </button>
       </div>
 
+      <RunResult />
+
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
           {error}
@@ -85,7 +87,7 @@ export function ScanView() {
           <div className="mb-4 grid grid-cols-4 gap-4 text-center">
             <Stat label={t("statFiles")}      value={files.length.toString()} />
             <Stat label={t("statJunk")}       value={files.filter(f => f.flags.is_junk).length.toString()} color="red" />
-            <Stat label={t("statDuplicates")} value={files.filter(f => f.flags.is_duplicate).length.toString()} color="yellow" />
+            <Stat label={t("statDuplicates")} value={duplicateCount.toString()} color="yellow" />
             <Stat
               label={t("statTotalSize")}
               value={formatBytes(files.reduce((s, f) => s + f.size_bytes, 0))}
@@ -113,6 +115,41 @@ function Stat({ label, value, color = "brand" }: { label: string; value: string;
     <div>
       <div className={`text-2xl font-bold ${colors[color] ?? "text-gray-900"}`}>{value}</div>
       <div className="text-xs text-gray-500">{label}</div>
+    </div>
+  );
+}
+
+/** What the last run did, with undo, and what an undo managed to restore. */
+function RunResult() {
+  const { lastResult, undoResult, undoLast, isLoading } = useScanStore();
+  const t = useT();
+  if (!lastResult && !undoResult) return null;
+
+  const errors = lastResult?.errors ?? undoResult?.errors ?? [];
+  const summary = lastResult
+    ? t("executedSummary", { n: lastResult.executed_count, errors: lastResult.error_count })
+    : t("undoneSummary", { n: undoResult!.undone_count, errors: undoResult!.errors.length });
+
+  return (
+    <div className="rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm text-gray-800">
+      <div className="flex items-center justify-between gap-4">
+        <span>{summary}</span>
+        {lastResult && lastResult.executed_count > 0 && (
+          <button
+            onClick={undoLast}
+            disabled={isLoading}
+            className="rounded-md border border-gray-300 bg-white px-3 py-1 text-xs hover:bg-gray-50 disabled:opacity-50"
+          >
+            {t("undo")}
+          </button>
+        )}
+      </div>
+      {errors.length > 0 && (
+        <ul className="mt-2 list-disc pl-5 text-xs text-gray-600">
+          {errors.map((e) => <li key={e}>{e}</li>)}
+        </ul>
+      )}
+      {lastResult && <p className="mt-2 text-xs text-gray-500">{t("trashNote")}</p>}
     </div>
   );
 }

@@ -56,20 +56,20 @@ async fn main() -> Result<()> {
     let cli = Cli::parse();
     let data_dir = data_dir();
     let store = Store::open(&data_dir.join("store"))?;
-    let _journal = Journal::open(&data_dir.join("journal"))?;
+    let journal = Journal::open(&data_dir.join("journal"))?;
 
     match cli.command {
         Commands::Scan { path, depth, hidden } => {
             cmd_scan(&path, depth, hidden).await?;
         }
         Commands::Organize { path, execute, no_ai } => {
-            cmd_organize(&path, execute, no_ai, &store, &_journal).await?;
+            cmd_organize(&path, execute, no_ai, &store, &journal).await?;
         }
         Commands::Undo => {
-            cmd_undo(&store, &_journal)?;
+            cmd_undo(&journal)?;
         }
         Commands::History { limit } => {
-            cmd_history(&_journal, limit)?;
+            cmd_history(&journal, limit)?;
         }
         Commands::Rules { action } => {
             cmd_rules(&action, &store)?;
@@ -110,7 +110,7 @@ async fn cmd_organize(
     execute: bool,
     _no_ai: bool,
     store: &Store,
-    _journal: &Journal,
+    journal: &Journal,
 ) -> Result<()> {
     let scanner = Scanner::new();
     let opts = ScanOptions::default();
@@ -139,9 +139,9 @@ async fn cmd_organize(
 
     if execute {
         println!("\nExecuting…");
-        // Journal needs to be stored somewhere accessible: use dummy path
-        let exec_journal = Journal::open(&std::env::temp_dir().join("cf_journal"))?;
-        let executor = Executor::new(exec_journal);
+        // The same journal `undo` and `history` read. It used to live in the
+        // temp directory, which macOS clears, so undo lost its history.
+        let executor = Executor::new(journal.clone());
         let result = executor.execute_plan(&plan, None)?;
         println!("Done: {} actions executed, {} errors", result.executed_count, result.error_count);
         for err in &result.errors {
@@ -154,19 +154,22 @@ async fn cmd_organize(
     Ok(())
 }
 
-fn cmd_undo(_store: &Store, _journal: &Journal) -> Result<()> {
-    let exec_journal = Journal::open(&std::env::temp_dir().join("cf_journal"))?;
-    let executor = Executor::new(exec_journal);
+fn cmd_undo(journal: &Journal) -> Result<()> {
+    let executor = Executor::new(journal.clone());
     match executor.undo_last() {
-        Ok(result) => println!("Undone: {} actions, {} errors", result.undone_count, result.errors.len()),
+        Ok(result) => {
+            println!("Undone: {} actions, {} errors", result.undone_count, result.errors.len());
+            for err in &result.errors {
+                eprintln!("  {err}");
+            }
+        }
         Err(e) => eprintln!("Undo failed: {e}"),
     }
     Ok(())
 }
 
-fn cmd_history(_journal: &Journal, limit: usize) -> Result<()> {
-    let exec_journal = Journal::open(&std::env::temp_dir().join("cf_journal"))?;
-    let entries = exec_journal.list(limit)?;
+fn cmd_history(journal: &Journal, limit: usize) -> Result<()> {
+    let entries = journal.list(limit)?;
     if entries.is_empty() {
         println!("No history yet.");
         return Ok(());

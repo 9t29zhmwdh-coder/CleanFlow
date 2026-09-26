@@ -2,6 +2,9 @@ use sled::Db;
 
 use crate::models::HistoryEntry;
 
+/// Cheap to clone: every clone shares the one open sled database. sled holds
+/// an exclusive lock per path, so opening the journal a second time fails.
+#[derive(Clone)]
 pub struct Journal {
     db: Db,
 }

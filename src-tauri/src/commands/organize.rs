@@ -50,10 +50,10 @@ pub fn execute_plan(
 
     drop(scans);
 
-    let executor = Executor::new(
-        cf_core::Journal::open(&state.data_dir.join("journal"))
-            .map_err(|e| crate::error::CfError::Other(e.to_string()))?,
-    );
+    // Reuse the journal AppState opened at startup; a second sled::open on the
+    // same path fails with "could not acquire lock", which made every
+    // execution fail.
+    let executor = Executor::new(state.journal.as_ref().clone());
     let result = executor
         .execute_plan(&plan, selected_ids.as_deref())
         .map_err(|e| crate::error::CfError::Other(e.to_string()))?;

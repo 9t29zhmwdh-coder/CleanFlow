@@ -11,7 +11,8 @@
 Point it at Downloads or Desktop. CleanFlow applies its rules, finds the
 duplicates and the junk, and hands you a plan: every move, every deletion,
 every tag, listed. You tick what should happen. Every executed action goes
-into a journal, so any of it can be undone later.
+into a journal: moves and renames can be undone from the app, and whatever
+went to the Trash comes back with Finder's Put Back.
 
 **Not for you if** the filenames tell you nothing and you need something to
 look inside the files, including photos. That is a different job, and
@@ -36,7 +37,7 @@ Nothing is executed until you select it, and the AI only suggests.
 
 ---
 
-**In practice:** you scan a folder, review a generated plan of moves, trashes and tags, and execute only what you select; every executed action can be undone from the journal. AI (Claude or a local Ollama model) only assists with classification and suggestions; the underlying scan, rule matching, and undo logic works without it.
+**In practice:** you scan a folder, review a generated plan of moves, trashes and tags, and execute only what you select; every run is kept in a journal, moves and renames can be undone from it, and trashed files come back with Finder's Put Back. AI (Claude or a local Ollama model) only assists with classification and suggestions; the underlying scan, rule matching, and undo logic works without it.
 
 ---
 
@@ -54,7 +55,7 @@ Nothing is executed until you select it, and the AI only suggests.
 | **Rule Engine** | Built-in + custom rules (e.g. "PDF + invoice → Documents/Finance/2026") |
 | **Action Preview** | Review every proposed action before executing |
 | **One-Click CleanFlow** | Execute all selected actions in one click |
-| **Full Undo** | Journal-based undo for any executed action |
+| **Undo** | Every run is listed on the start page; moves and renames are reversed, trashed files are named so you can Put Back them from the Trash |
 | **CLI Mode** | `cleanflow scan`, `cleanflow organize`, `cleanflow undo` |
 
 ---

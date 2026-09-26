@@ -6,6 +6,27 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), [Semantic Vers
 
 ---
 
+## [1.4.0] - 2026-09-26
+
+### Fixed
+
+- Executing a plan in the app never did anything. The app opens its journal database at startup, and every execute and undo command opened the same database a second time, which the database refuses while the first handle holds its lock. The error never showed, because the interface reset itself right after executing and discarded both the error and the result. Execute and undo now share the one open journal.
+- The scan summary always showed 0 duplicates, because duplicates were only hashed once the plan was built. The scan now looks for them as soon as it finishes.
+- A small folder could leave the scan hanging on "Done": the finished signal could arrive before the app had finished subscribing to it, and the handler then failed on the subscription it tried to cancel.
+- Undoing a file that had gone to the Trash did nothing, yet counted it as undone. It is now reported by name, with the hint to restore it via Finder's Put Back, which the Finder-based trashing keeps available.
+- The command line kept its undo history in the temporary folder, which macOS clears, so `cleanflow undo` and `cleanflow history` lost track of older runs. They now use the same journal as the app.
+
+### Added
+
+- After a run the app shows what it did, with an Undo button, and the start page lists recent runs, each of which can be undone.
+- The interface follows the system language until you pick one.
+
+### Security
+
+- The app now runs with a Content Security Policy that only allows its own scripts, styles and images plus the Tauri bridge.
+
+---
+
 ## [1.3.4] - 2026-09-25
 
 ### Fixed
