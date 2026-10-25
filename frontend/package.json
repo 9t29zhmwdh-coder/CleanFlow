@@ -15,9 +15,9 @@
     "@tauri-apps/plugin-notification": "^2",
     "@tauri-apps/plugin-shell": "^2",
     "clsx": "^2",
-    "lucide-react": "^1.53.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "lucide-react": "^1.61.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "zustand": "^5"
   },
   "devDependencies": {
@@ -28,6 +28,6 @@
     "postcss": "^8",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
-    "vite": "^8.3.4"
+    "vite": "^8.3.5"
   }
 }
